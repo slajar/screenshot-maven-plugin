@@ -5,7 +5,7 @@
 	<artifactId>screenshot-maven-plugin-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>Screenshot Maven Plugin</name>
+	<name>Screenshot Maven Plugin Parent</name>
 	<description>Parent project to screenshot-maven-plugin and additional modules</description>
 	<url>http://code.google.com/p/screenshot-maven-plugin</url>
 	<scm>
@@ -15,6 +15,9 @@
 		</developerConnection>
 		<url>http://code.google.com/p/screenshot-maven-plugin/source/browse</url>
 	</scm>
+	<properties>
+		<jettyPort>8080</jettyPort>
+	</properties>	
 	<build>
 		<plugins>
 			<plugin>
@@ -24,6 +27,7 @@
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
+					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -42,7 +46,7 @@
 				</executions>
 			</plugin>
 		</plugins>
-	</build>	
+	</build>
 	<!--
 		Found at Don Brown's Weblog:
 		http://www.jroller.com/mrdon/entry/find_of_the_day_wagon
@@ -59,10 +63,37 @@
 			<url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo-snapshot</url>
 		</snapshotRepository>
 	</distributionManagement>
+	<profiles>
+		<profile>
+			<id>local-jetty</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>se.bluebrim.maven.plugin</groupId>
+						<artifactId>screenshot-maven-plugin</artifactId>
+						<version>${project.version}</version>
+						<configuration>
+							<uploadBaseUrl>http://localhost:${jettyPort}/tiny-cms/upload</uploadBaseUrl>
+							<cleanUrl>http://localhost:${jettyPort}/tiny-cms/clean</cleanUrl>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>se.atg.maven.plugin</groupId>
+						<artifactId>upload-maven-plugin</artifactId>
+						<version>${project.version}</version>
+						<configuration>
+							<uploadUrl>http://localhost:${jettyPort}/tiny-cms/upload</uploadUrl>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
 	<modules>
 		<module>screenshot-maven-plugin-api</module>
 		<module>screenshot-maven-plugin</module>
 		<module>upload-maven-plugin</module>
-		<module>tiny-cms</module>		
-	</modules>	
+		<module>tiny-cms</module>
+	</modules>
 </project>
