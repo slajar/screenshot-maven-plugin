@@ -60,7 +60,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<modules>
-		<module>screenshot-maven-api</module>
+		<module>screenshot-maven-plugin-api</module>
 		<module>screenshot-maven-plugin</module>
 		<module>upload-maven-plugin</module>
 		<module>tiny-cms</module>		
