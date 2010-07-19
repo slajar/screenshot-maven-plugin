@@ -6,5 +6,10 @@
       <prefix>screenshot</prefix>
       <artifactId>screenshot-maven-plugin</artifactId>
     </plugin>
+    <plugin>
+      <name>Upload Maven Plugin</name>
+      <prefix>upload</prefix>
+      <artifactId>upload-maven-plugin</artifactId>
+    </plugin>
   </plugins>
 </metadata>
