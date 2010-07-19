@@ -6,5 +6,7 @@ When running the prepare goal inside Eclipse I get the following error:
 "Maven executable not found at: C:\workspaces\screenshot-maven-plugin\screenshot-maven-plugin-parent\EMBEDDED\bin\mvn.bat"
 
 This forces me to run Maven outside Eclipse from the command line. These files helps me to avoid typing 
-the Maven release commands every time a release should be performed. 
+the Maven release commands every time a release should be performed.
+
+Valuable tips of how to release was found at: http://code.google.com/p/maven-install4j/wiki/ReleaseProcedure
 
