@@ -9,6 +9,9 @@
 	<artifactId>swingset3-demo-app</artifactId>
 	<name>SwingSet3 Demo Application</name>
 	<description>The SwingSet3 application adjusted to Maven conventions with additional test classes and JavaDoc screenshots.</description>
+	<properties>
+		<screenshot-maven-plugin-version>0.0.2</screenshot-maven-plugin-version>
+	</properties>
 	<build>
 		<!-- Include source files in the target jar -->
 		<resources>
@@ -19,7 +22,24 @@
 				<directory>src/main/java</directory>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<groupId>se.bluebrim.maven.plugin</groupId>
+				<artifactId>screenshot-maven-plugin</artifactId>
+				<version>${screenshot-maven-plugin-version}</version>
+				<configuration>
+					<goalPrefix>screenshot</goalPrefix>
+				</configuration>			
+			</plugin>
+		</plugins>			
 	</build>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>google-code</id>
+			<name>Screenshot Maven Plugin Repo</name>
+			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.swinglabs</groupId>
@@ -44,7 +64,7 @@
 		<dependency>
 			<groupId>se.bluebrim.maven.plugin</groupId>
 			<artifactId>screenshot-maven-plugin-api</artifactId>
-			<version>0.0.2</version>
+			<version>${screenshot-maven-plugin-version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
