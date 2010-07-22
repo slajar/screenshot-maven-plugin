@@ -47,7 +47,15 @@ public class GalleryMojo extends AbstractMavenReport
      */
 	private ArrayList<String> testClasspathElements;
 
-    /**
+	/**
+     * URL to the source code used to build the source code links under each screenshot image in the report
+     *
+     * @parameter
+     * @required
+     */
+	private String sourceCodeURL;
+	
+	/**
      * Maximum screenshot width
      *
      * @parameter default-value="600" 
@@ -86,7 +94,7 @@ public class GalleryMojo extends AbstractMavenReport
 	@Override
 	protected void executeReport(Locale locale) throws MavenReportException {
 		getLog().info("Screenshot gallery executed. The report directory is: " + outputDirectory, null);
-		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory);
+		GalleryScreenshotScanner screenshotScanner = new GalleryScreenshotScanner(this, project, testClassesDirectory, classesDirectory, testClasspathElements, maxWidth, outputDirectory, sourceCodeURL);
 		screenshotScanner.setProject(project);
 		try {
 			screenshotScanner.annotationScan();
