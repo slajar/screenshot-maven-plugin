@@ -10,7 +10,7 @@
 	<name>SwingSet3 Demo Application</name>
 	<description>The SwingSet3 application adjusted to Maven conventions with additional test classes and JavaDoc screenshots.</description>
 	<properties>
-		<screenshot-maven-plugin-version>0.0.2</screenshot-maven-plugin-version>
+		<screenshot-maven-plugin-version>0.0.3-SNAPSHOT</screenshot-maven-plugin-version>
 	</properties>
 	<build>
 		<!-- Include source files in the target jar -->
@@ -29,6 +29,11 @@
 				<version>${screenshot-maven-plugin-version}</version>
 				<configuration>
 					<goalPrefix>screenshot</goalPrefix>
+					<!-- 
+					Can't use ${project.scm.url} because that is appended with artifactId of this project. 
+					See: http://jira.codehaus.org/browse/MNG-2290 
+					-->
+					<sourceCodeURL>http://code.google.com/p/screenshot-maven-plugin/source/browse/trunk/screenshot-maven-plugin-parent/swingset3-demo-app/src/main/java</sourceCodeURL>
 				</configuration>			
 			</plugin>
 		</plugins>			

@@ -23,13 +23,15 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	private File outputDirectory;
 	private Sink sink;
 	private MavenProject project;
+	private String sourceCodeURL;
 
-	public GalleryScreenshotScanner(AbstractMavenReport reportMojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory) 
+	public GalleryScreenshotScanner(AbstractMavenReport reportMojo, MavenProject project, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, int maxWidth, String outputDirectory, String sourceCodeURL) 
 	{
 		super(reportMojo, testClassesDirectory, classesDirectory, testClasspathElements);
 		this.project = project;
 		this.outputDirectory = new File(outputDirectory);
 		this.outputDirectory.mkdirs();
+		this.sourceCodeURL = sourceCodeURL;
 		sink = reportMojo.getSink();
 		
 	}
@@ -52,27 +54,13 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 			sink.figureGraphics(file.getName());
 			sink.figure_();
 			sink.lineBreak();
-			sink.link(getScmPath() + getSourceDirectory() + "/" + org.springframework.util.ClassUtils.convertClassNameToResourcePath(screenshotClass.getName()) + ".java");
+			sink.link(sourceCodeURL + "/" + org.springframework.util.ClassUtils.convertClassNameToResourcePath(screenshotClass.getName()) + ".java");
 			sink.text(screenshotClass.getName());
 			sink.link_();
 			sink.paragraph_();
 		}
 	}
 	
-	private String getScmPath()
-	{
-		return project.getScm().getUrl();
-	}
-
-	/**
-	 * TODO: Retrieve from Maven project
-	 *
-	 */
-	private String getSourceDirectory()
-	{
-		return "/src/main/java";
-	}
-			
 	protected Log getLog() 
 	{
 		return mojo.getLog();
