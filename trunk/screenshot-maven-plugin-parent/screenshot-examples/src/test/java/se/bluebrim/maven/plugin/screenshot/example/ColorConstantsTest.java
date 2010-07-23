@@ -1,8 +1,6 @@
 package se.bluebrim.maven.plugin.screenshot.example;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Paint;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
@@ -11,18 +9,14 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
-import org.jdesktop.swingx.JXPanel;
-import org.jdesktop.swingx.border.DropShadowBorder;
-import org.jdesktop.swingx.painter.CheckerboardPainter;
-import org.jdesktop.swingx.painter.CompoundPainter;
-import org.jdesktop.swingx.painter.MattePainter;
 
+import se.bluebrim.maven.plugin.screenshot.NamedSamplePanel;
+import se.bluebrim.maven.plugin.screenshot.PaintSamplePanel;
 import se.bluebrim.maven.plugin.screenshot.Screenshot;
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
 
@@ -74,50 +68,6 @@ public class ColorConstantsTest {
 			}
 		}
 		return paintSamples;
-	}
-
-	
-	@SuppressWarnings("serial")
-	public static class PaintSamplePanel extends JXPanel
-	{
-		private Dimension size;
-		
-		public PaintSamplePanel(Paint paint) 
-		{
-			this(paint, new Dimension(80, 80));
-		}
-
-		public PaintSamplePanel(Paint paint, Dimension size) 
-		{
-			this.size = size;
-			CompoundPainter<PaintSamplePanel> painter = new CompoundPainter<PaintSamplePanel>(new CheckerboardPainter(), new MattePainter(paint, true));
-			setBackgroundPainter(painter);
-			setPaintBorderInsets(false);
-			setBorder(new DropShadowBorder());
-		}
-		
-		@Override
-		public Dimension getPreferredSize() 
-		{
-			return size;
-		}
-	}
-	
-	@SuppressWarnings("serial")
-	public static class NamedSamplePanel extends JXPanel
-	{
-		
-		public NamedSamplePanel(JComponent samplePanel, String name) 
-		{
-			setLayout(new MigLayout(new LC().flowY()));
-			setOpaque(false);
-			add(samplePanel, "center");	
-			JLabel label = new JLabel(name);
-			label.setOpaque(false);
-//			label.setFont(label.getFont().deriveFont(label.getFont().getSize2D() * 1.3f));	// Increase font size
-			add(label, "center");
-		
-		}		
 	}
 
 }

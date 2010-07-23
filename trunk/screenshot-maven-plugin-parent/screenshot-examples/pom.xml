@@ -51,12 +51,5 @@
 			<version>${screenshot-maven-plugin-version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.miglayout</groupId>
-			<artifactId>miglayout</artifactId>
-			<version>3.7.3.1</version>
-			<classifier>swing</classifier>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 </project>
