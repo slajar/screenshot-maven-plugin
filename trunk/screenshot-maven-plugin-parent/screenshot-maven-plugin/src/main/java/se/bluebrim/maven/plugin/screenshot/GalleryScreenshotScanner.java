@@ -44,11 +44,12 @@ public class GalleryScreenshotScanner extends ScreenshotScanner
 	 */
 	protected void handleFoundMethod(Class candidateClass, Method method) 
 	{
-		JComponent screenShotComponent = callScreenshotMethod(candidateClass, method);
-		if (screenShotComponent != null)
+		Object screenshot = callScreenshotMethod(candidateClass, method);
+		if (screenshot instanceof JComponent)
 		{
-			Class screenshotClass = getTargetClass(method, screenShotComponent);
-			File file = createScreenshotFile(screenShotComponent, screenshotClass, outputDirectory, method);
+			JComponent screenshotComponent = (JComponent)screenshot;
+			Class screenshotClass = getTargetClass(method, screenshotComponent);
+			File file = createScreenshotFile(screenshotComponent, screenshotClass, outputDirectory, method);
 			sink.paragraph();
 			sink.figure();
 			sink.figureGraphics(file.getName());
