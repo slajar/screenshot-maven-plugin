@@ -7,7 +7,7 @@ import java.awt.Color;
  * <p>
  * This is an example of a resource class with visual samples included in the Javadoc.
  * The images for the Javadoc are created by a few lines of  code in a test class.
- * The test class is processed by the screenshot-maven-plugin to produce the images.
+ * The test class is processed by the screenshot-maven-plugin in a Maven build to produce the images.
  * </p>
  * 
  * @author Goran Stack
