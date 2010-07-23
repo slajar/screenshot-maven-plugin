@@ -9,7 +9,7 @@ import java.awt.Color;
  * </p>
  * In Eclipse IDE (works probably in other IDE's as well) try the following:
  * <ul>
- * <li>Hower the mouse over a ColorConstants class reference and see how the Javadoc pop ups</li>
+ * <li>Hover your mouse pointer over a {@code ColorConstants} class reference and see how the Javadoc pop ups</li>
  * <li>Try to assign {@code yourColor} with a color from {@code ColorConstants}</li>
  * </ul>
  * 
