@@ -44,7 +44,7 @@ public class ColorConstantsTest {
 	public JComponent createPaletteScreenshot() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		Field[] fields = ColorConstants.class.getDeclaredFields();
-		JPanel panel = new JPanel(new MigLayout(new LC().wrapAfter(10)));
+		JPanel panel = new JPanel(new MigLayout(new LC().wrapAfter(7)));
 		for (Field field : fields) {
 			if (field.getType() == Color.class && Modifier.isStatic(field.getModifiers()))
 			{
