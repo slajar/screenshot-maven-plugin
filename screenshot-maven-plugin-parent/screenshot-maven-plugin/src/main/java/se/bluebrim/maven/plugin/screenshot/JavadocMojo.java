@@ -21,7 +21,10 @@ public class JavadocMojo extends AbstractMojo
 {
 
 	/**
-     * Screenshot scale factor. Must be > 0.0 and =< 1.0
+     * Javadoc screenshot scale factor. Used to reduce the size of the screenshots to get
+     * a more pleasant experience when Javadoc including screenshots popups in your IDE. 
+     * 0.6 is a recommended value.<br>
+     * Must be > 0.0 and =< 1.0
      *
      * @parameter default-value="1"
      */
