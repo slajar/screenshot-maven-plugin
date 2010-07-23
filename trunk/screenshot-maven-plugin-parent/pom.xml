@@ -111,5 +111,6 @@
 		<module>upload-maven-plugin</module>
 		<module>tiny-cms</module>
 		<module>swingset3-demo-app</module>
+		<module>screenshot-examples</module>
 	</modules>
 </project>
