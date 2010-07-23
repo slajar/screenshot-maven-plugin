@@ -30,10 +30,11 @@
 				<configuration>
 					<goalPrefix>screenshot</goalPrefix>
 					<!-- 
-					Can't use ${project.scm.url} because that is appended with artifactId of this project. 
+					Can't use ${project.scm.url} because that is appended with artifactId of the module. 
 					See: http://jira.codehaus.org/browse/MNG-2290 
 					-->
-					<sourceCodeURL>http://code.google.com/p/screenshot-maven-plugin/source/browse/trunk/screenshot-maven-plugin-parent/swingset3-demo-app/src/main/java</sourceCodeURL>
+					<sourceCodeURL>http://code.google.com/p/screenshot-maven-plugin/source/browse/trunk/screenshot-maven-plugin-parent/${project.artifactId}/src/main/java</sourceCodeURL>
+					<javaDocImageScale>0.6</javaDocImageScale>
 				</configuration>			
 			</plugin>
 		</plugins>			
