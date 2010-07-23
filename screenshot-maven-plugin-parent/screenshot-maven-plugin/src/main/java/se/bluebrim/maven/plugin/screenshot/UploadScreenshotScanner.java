@@ -59,13 +59,14 @@ public class UploadScreenshotScanner extends ScreenshotScanner {
 
 	private void uploadScreenshot(Class candidateClass, Method method, boolean oneForEachLocale) 
 	{
-		JComponent screenShotComponent = callScreenshotMethod(candidateClass, method);
-		if (screenShotComponent != null)
+		Object screenshot = callScreenshotMethod(candidateClass, method);
+		if (screenshot instanceof JComponent)
 		{
-			Class screenshotClass = getTargetClass(method, screenShotComponent);
+			JComponent screenshotComponent = (JComponent)screenshot;
+			Class screenshotClass = getTargetClass(method, screenshotComponent);
 			String screenshotName = createScreenshotName(screenshotClass, method, oneForEachLocale);
 			File tempFile = createTempFile(screenshotName, "." + FORMAT_PNG, null);
-			takeScreenShot(screenShotComponent, tempFile);
+			takeScreenShot(screenshotComponent, tempFile);
 			try {
 				uploadFile(tempFile, screenshotName + "." + FORMAT_PNG);
 			} catch (HttpException e) {

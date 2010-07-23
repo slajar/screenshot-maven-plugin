@@ -88,6 +88,11 @@ public abstract class ScreenshotScanner {
 	protected File createScreenshotFile(JComponent screenShotComponent, Class screenshotClass, File dir, Method method) 
 	{
 		String screenshotName = createScreenshotName(screenshotClass, method);
+		return createScreenshotFile(screenShotComponent, dir, screenshotName);
+	}
+
+	protected File createScreenshotFile(JComponent screenShotComponent, File dir, String screenshotName) 
+	{
 		File file = new File(dir.getPath(), screenshotName + "." + FORMAT_PNG);
 		File tempFile = createTempFile(screenshotName, "." + FORMAT_PNG, dir);
 		takeScreenShot(screenShotComponent, tempFile);
@@ -322,12 +327,12 @@ public abstract class ScreenshotScanner {
 	}
 	
 	@SuppressWarnings("unchecked")
-	protected JComponent callScreenshotMethod(Class targetClass, Method screenshotMethod)
+	protected Object callScreenshotMethod(Class targetClass, Method screenshotMethod)
 	{
 		try
 		{
 			Object instance = targetClass.newInstance();
-			return (JComponent) screenshotMethod.invoke(instance);
+			return screenshotMethod.invoke(instance);
 		} catch (InstantiationException e)
 		{
 			throw new RuntimeException(e);

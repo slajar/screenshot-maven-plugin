@@ -2,10 +2,12 @@ package se.bluebrim.maven.plugin.screenshot;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JComponent;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 
 
@@ -33,14 +35,31 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	 */
 	@Override
 	protected void handleFoundMethod(Class candidateClass, Method method) {
-		JComponent screenShotComponent = callScreenshotMethod(candidateClass, method);
-		if (screenShotComponent != null)
+		Object screenshot = callScreenshotMethod(candidateClass, method);
+		if (screenshot instanceof JComponent)
 		{
-			Class javadocClass = getTargetClass(method, screenShotComponent);
-			File docFilesDirectory = new File(sourceDirectory, org.springframework.util.ClassUtils.classPackageAsResourcePath(javadocClass) + "/doc-files");
-			docFilesDirectory.mkdirs();
-			createScreenshotFile(screenShotComponent, javadocClass, docFilesDirectory, method);
-		}
+			JComponent screenshotComponent = (JComponent)screenshot;
+			Class javadocClass = getTargetClass(method, screenshotComponent);
+			createJavadocScreenshot(createScreenshotName(javadocClass, method), screenshotComponent, javadocClass);
+		} else
+			if (screenshot instanceof Collection<?>)
+			{
+				int index = 0;
+				Collection<ScreenshotDescriptor> screenShots = (Collection<ScreenshotDescriptor>) screenshot;
+				for (ScreenshotDescriptor screenshotDescriptor : screenShots) {
+					Class javadocClass = screenshotDescriptor.getTargetClass();
+					String scene = StringUtils.isEmpty(screenshotDescriptor.getScene()) ? "" + index : screenshotDescriptor.getScene();
+					createJavadocScreenshot(javadocClass.getSimpleName() + "-" + scene, screenshotDescriptor.getScreenshot(), javadocClass);
+				}
+			}
+				
+	}
+
+	private void createJavadocScreenshot(String screenshotName, JComponent screenshotComponent, Class javadocClass) 
+	{
+		File docFilesDirectory = new File(sourceDirectory, org.springframework.util.ClassUtils.classPackageAsResourcePath(javadocClass) + "/doc-files");
+		docFilesDirectory.mkdirs();
+		createScreenshotFile(screenshotComponent, docFilesDirectory, screenshotName);
 	}	
 
 }
