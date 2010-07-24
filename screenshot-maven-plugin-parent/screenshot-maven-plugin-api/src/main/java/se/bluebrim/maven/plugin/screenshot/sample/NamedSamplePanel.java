@@ -1,4 +1,4 @@
-package se.bluebrim.maven.plugin.screenshot;
+package se.bluebrim.maven.plugin.screenshot.sample;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;

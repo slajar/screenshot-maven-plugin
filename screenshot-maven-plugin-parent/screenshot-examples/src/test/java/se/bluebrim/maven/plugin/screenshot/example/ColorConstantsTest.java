@@ -1,24 +1,14 @@
 package se.bluebrim.maven.plugin.screenshot.example;
 
-import java.awt.Color;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
-import net.miginfocom.layout.LC;
-import net.miginfocom.swing.MigLayout;
-
-
-import se.bluebrim.maven.plugin.screenshot.NamedSamplePanel;
-import se.bluebrim.maven.plugin.screenshot.PaintSamplePanel;
 import se.bluebrim.maven.plugin.screenshot.Screenshot;
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
+import se.bluebrim.maven.plugin.screenshot.sample.PalettePanel;
+import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 
 /**
  * Demonstrates how to create screenshots for a constant class containing visualizable resources.
@@ -34,40 +24,21 @@ import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
 public class ColorConstantsTest {
 
 
-	@Screenshot(oneForEachLocale = false, targetClass = ColorConstants.class)
-	public JComponent createPaletteScreenshot() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
-	{
-		Field[] fields = ColorConstants.class.getDeclaredFields();
-		JPanel panel = new JPanel(new MigLayout(new LC().wrapAfter(7)));
-		for (Field field : fields) {
-			if (field.getType() == Color.class && Modifier.isStatic(field.getModifiers()))
-			{
-				Color color = (Color) field.get(null);
-				JPanel sample = new NamedSamplePanel(new PaintSamplePanel(color), field.getName());
-				panel.add(sample, "center");
-			}
-		}
-		panel.setOpaque(false);
-		return panel;
-	}
+//	@Screenshot(oneForEachLocale = false, targetClass = ColorConstants.class)
+//	public JComponent createPaletteScreenshot() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
+//	{
+//		return PalettePanel.createFromStaticPaintFields(ColorConstants.class, 7);
+//	}
 
 	
 	/**
 	 * Creates a screen shot for each method in the PaintFactory 
 	 */
 	@Screenshot
-	public Collection<ScreenshotDescriptor> createFieldScreenshots() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
+	public Collection<ScreenshotDescriptor> createStaticPaintFieldScreenshots()
 	{
-		List<ScreenshotDescriptor> paintSamples = new ArrayList<ScreenshotDescriptor>();
-		Field[] fields = ColorConstants.class.getDeclaredFields();
-		for (Field field : fields) {
-			if (field.getType() == Color.class && Modifier.isStatic(field.getModifiers()))
-			{
-				Color color = (Color) field.get(null);
-				paintSamples.add(new ScreenshotDescriptor(new PaintSamplePanel(color), ColorConstants.class, field.getName().toLowerCase()));
-			}
-		}
-		return paintSamples;
+		Collection<ScreenshotDescriptor> fieldScreenshots = SampleUtil.createStaticPaintFieldScreenshots(ColorConstants.class);
+		return fieldScreenshots;
 	}
 
 }
