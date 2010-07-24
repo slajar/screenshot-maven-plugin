@@ -1,7 +1,7 @@
 /**
  * 
  */
-package se.bluebrim.maven.plugin.screenshot;
+package se.bluebrim.maven.plugin.screenshot.sample;
 
 import java.awt.Dimension;
 import java.awt.Paint;
@@ -36,12 +36,18 @@ public class PaintSamplePanel extends JXPanel
 		this.size = size;
 		CompoundPainter<PaintSamplePanel> painter = new CompoundPainter<PaintSamplePanel>(new CheckerboardPainter(), new MattePainter(paint, true));
 		setBackgroundPainter(painter);
-		setPaintBorderInsets(false);
 		setBorder(new DropShadowBorder());
+		setPaintBorderInsets(false);
 	}
 	
 	@Override
 	public Dimension getPreferredSize() 
+	{
+		return size;
+	}
+	
+	@Override
+	public Dimension getMinimumSize() 
 	{
 		return size;
 	}
