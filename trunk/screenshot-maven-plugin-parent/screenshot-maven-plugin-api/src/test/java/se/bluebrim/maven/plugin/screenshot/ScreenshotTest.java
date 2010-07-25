@@ -16,7 +16,6 @@ import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.JXFrame;
 
-import se.bluebrim.maven.plugin.screenshot.Screenshot;
 import se.bluebrim.maven.plugin.screenshot.decorate.CalloutDecorator;
 import se.bluebrim.maven.plugin.screenshot.decorate.Center;
 import se.bluebrim.maven.plugin.screenshot.decorate.CompositeDecorator;
@@ -24,6 +23,9 @@ import se.bluebrim.maven.plugin.screenshot.decorate.DecoratorUtils;
 import se.bluebrim.maven.plugin.screenshot.decorate.Emphasizer;
 import se.bluebrim.maven.plugin.screenshot.decorate.FrameDecorator;
 import se.bluebrim.maven.plugin.screenshot.decorate.ScreenshotDecorator;
+import se.bluebrim.maven.plugin.screenshot.sample.NamedSamplePanel;
+import se.bluebrim.maven.plugin.screenshot.sample.PaintSamplePanel;
+import se.bluebrim.maven.plugin.screenshot.sample.PalettePanel;
 
 public class ScreenshotTest {
 	
@@ -112,7 +114,37 @@ public class ScreenshotTest {
 		return panel;
 	}
 	
+	@Screenshot (targetClass=PaintSamplePanel.class)
+	public JPanel testPaintSamplePanel()
+	{
+		return new PaintSamplePanel(Color.ORANGE);
+	}
 	
+	@Screenshot (targetClass=NamedSamplePanel.class)
+	public JPanel testNamedSamplePanel()
+	{
+		return new NamedSamplePanel(new PaintSamplePanel(Color.ORANGE), "ORANGE");
+	}
+	
+	@Screenshot (targetClass=PalettePanel.class)
+	public JPanel textPalettePanel()
+	{
+		PalettePanel panel = new PalettePanel(4);
+		panel.addSample(Color.BLACK, "BLACK");
+		panel.addSample(Color.BLUE, "BLUE");
+		panel.addSample(Color.CYAN, "CYAN");
+		panel.addSample(Color.LIGHT_GRAY, "LIGHT GRAY");
+		panel.addSample(Color.DARK_GRAY, "DARK GRAY");
+		panel.addSample(Color.GRAY, "GRAY");
+		panel.addSample(Color.GREEN, "GREEN");
+		panel.addSample(Color.MAGENTA, "MAGENTA");
+		panel.addSample(Color.ORANGE, "ORANGE");
+		panel.addSample(Color.PINK, "PINK");
+		panel.addSample(Color.RED, "RED");
+		panel.addSample(Color.WHITE, "WHITE");
+		panel.addSample(Color.YELLOW, "YELLOW");
+		return panel;
+	}
 	
 	public static void main(String[] args) {
 		final ScreenshotTest instance = new ScreenshotTest();
@@ -133,6 +165,8 @@ public class ScreenshotTest {
 		panel.add(createCompositeDecoratorPanel());
 		panel.add(createEmphasizedComponent());
 		panel.add(createEmphasizedComponentAndCallout());
+		panel.add(testNamedSamplePanel());
+		panel.add(testPaintSamplePanel());
 		window.getContentPane().add(panel);
 		window.pack();
 		window.setLocationRelativeTo(null);
