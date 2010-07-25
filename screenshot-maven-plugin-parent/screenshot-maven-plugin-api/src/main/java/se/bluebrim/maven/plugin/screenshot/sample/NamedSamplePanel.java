@@ -1,5 +1,7 @@
 package se.bluebrim.maven.plugin.screenshot.sample;
 
+import java.awt.Color;
+
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
@@ -10,7 +12,7 @@ import org.jdesktop.swingx.JXPanel;
 
 /**
  * <p>
- * A small panel with a sample of something that can be drawn by {@link JComponent}
+ * A small panel with a sample of something that can be drawn by a {@link JComponent}
  * with a text label below the sample.
  * </p>
  * <img src="doc-files/NamedSamplePanel.png">
@@ -26,6 +28,7 @@ public class NamedSamplePanel extends JXPanel {
 		setOpaque(false);
 		add(samplePanel, "center");
 		JLabel label = new JLabel(name);
+		label.setForeground(Color.GRAY);
 		label.setOpaque(false);
 		add(label, "center");
 	}

@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.Icon;
+import javax.swing.JLabel;
+
 import org.apache.commons.lang.ClassUtils;
 
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
@@ -28,7 +31,7 @@ public class SampleUtil {
 		List<ScreenshotDescriptor> paintSamples = new ArrayList<ScreenshotDescriptor>();
 		Field[] fields = ofClass.getDeclaredFields();
 		for (Field field : fields) {
-			if (ClassUtils.getAllInterfaces(field.getType()).contains(Paint.class) && Modifier.isStatic(field.getModifiers()))
+			if (Paint.class.isAssignableFrom(field.getType()) && Modifier.isStatic(field.getModifiers()))
 			{
 				Paint paint;
 				try {
@@ -42,6 +45,27 @@ public class SampleUtil {
 			}
 		}
 		return paintSamples;
+	}
+	
+	public static Collection<ScreenshotDescriptor> createStaticIconFieldScreenshots(Class ofClass)
+	{
+		List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
+		Field[] fields = ofClass.getDeclaredFields();
+		for (Field field : fields) {
+			if (Icon.class.isAssignableFrom(field.getType()) && Modifier.isStatic(field.getModifiers()))
+			{
+				Icon icon;
+				try {
+					icon = (Icon) field.get(null);
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				}
+				icontSamples.add(new ScreenshotDescriptor(new JLabel(icon), ofClass, field.getName().toLowerCase()));
+			}
+		}
+		return icontSamples;
 	}
 
 }

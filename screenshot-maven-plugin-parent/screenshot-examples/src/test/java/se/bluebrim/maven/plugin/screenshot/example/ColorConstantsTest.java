@@ -1,6 +1,5 @@
 package se.bluebrim.maven.plugin.screenshot.example;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import javax.swing.JComponent;
@@ -24,11 +23,11 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 public class ColorConstantsTest {
 
 
-//	@Screenshot(oneForEachLocale = false, targetClass = ColorConstants.class)
-//	public JComponent createPaletteScreenshot() throws IllegalArgumentException, IllegalAccessException, InvocationTargetException
-//	{
-//		return PalettePanel.createFromStaticPaintFields(ColorConstants.class, 7);
-//	}
+	@Screenshot(oneForEachLocale = false, targetClass = ColorConstants.class)
+	public JComponent createPaletteScreenshot()
+	{
+		return PalettePanel.createFromStaticPaintFields(ColorConstants.class, 7);
+	}
 
 	
 	/**

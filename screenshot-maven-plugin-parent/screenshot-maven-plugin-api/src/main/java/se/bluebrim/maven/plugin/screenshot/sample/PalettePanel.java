@@ -1,17 +1,18 @@
 package se.bluebrim.maven.plugin.screenshot.sample;
 
-import java.awt.Color;
 import java.awt.Paint;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import javax.swing.Icon;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import org.apache.commons.lang.ClassUtils;
 
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
+
+import org.apache.commons.lang.ClassUtils;
 
 /**
  * Arrange added samples in rows with the specified number of columns.
@@ -28,7 +29,7 @@ public class PalettePanel extends JPanel
 		Field[] fields = ofClass.getDeclaredFields();
 		PalettePanel panel = new PalettePanel(noOfColumns);
 		for (Field field : fields) {
-			if (ClassUtils.getAllInterfaces(field.getType()).contains(Paint.class ) && Modifier.isStatic(field.getModifiers()))
+			if (Paint.class.isAssignableFrom(field.getType()) && Modifier.isStatic(field.getModifiers()))
 			{
 				Paint paint;
 				try {
@@ -39,6 +40,27 @@ public class PalettePanel extends JPanel
 					throw new RuntimeException(e);
 				}
 				panel.addSample(paint, field.getName());
+			}
+		}
+		return panel;
+	}
+
+	public static PalettePanel createFromStaticIconFields(Class<?> ofClass, int noOfColumns)
+	{
+		Field[] fields = ofClass.getDeclaredFields();
+		PalettePanel panel = new PalettePanel(noOfColumns);
+		for (Field field : fields) {
+			if (Icon.class.isAssignableFrom(field.getType()) && Modifier.isStatic(field.getModifiers()))
+			{
+				Icon icon;
+				try {
+					icon = (Icon) field.get(null);
+				} catch (IllegalArgumentException e) {
+					throw new RuntimeException(e);
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				}
+				panel.addSample(new JLabel(icon), field.getName());
 			}
 		}
 		return panel;
