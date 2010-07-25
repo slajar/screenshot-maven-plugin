@@ -1,12 +1,15 @@
 package com.sun.swingset3.demos.button;
 
 import javax.swing.JComponent;
+import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import se.bluebrim.maven.plugin.screenshot.Screenshot;
 
-import com.sun.swingset3.demos.button.ButtonDemo;
+import com.sun.swingset3.demos.table.TableDemo;
+import com.sun.swingset3.demos.togglebutton.ToggleButtonDemo;
+import com.sun.swingset3.demos.tree.TreeDemo;
 
 /**
  * Demonstrates how to create various screen shots of components in the SwingSet3 application
@@ -23,9 +26,32 @@ public class ButtonDemoTest
 	}
 	
 	@Screenshot (scene = "laf-nimbus")
-	public JComponent createButtonDemoScreenShot2() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
+	public JComponent createNimbusButtonDemoScreenshot() throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException
 	{
+		LookAndFeel laf = UIManager.getLookAndFeel();
 		UIManager.setLookAndFeel("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel");
-		return new ButtonDemo();
+		ButtonDemo buttonDemo = new ButtonDemo();
+		UIManager.setLookAndFeel(laf);
+		return buttonDemo;
 	}
+	
+	@Screenshot
+	public JComponent createToogleButtonDemoScreenshot()
+	{
+		return new ToggleButtonDemo();
+	}
+	
+	@Screenshot
+	public JComponent createTableDemoScreenshot()
+	{
+		return new TableDemo();
+	}
+	
+	@Screenshot
+	public JComponent createTreeDemoScreenshot()
+	{
+		return new TreeDemo();
+	}
+
+
 }
