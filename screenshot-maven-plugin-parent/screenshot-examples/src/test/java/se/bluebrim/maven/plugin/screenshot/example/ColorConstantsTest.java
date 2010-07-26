@@ -36,8 +36,7 @@ public class ColorConstantsTest {
 	@Screenshot
 	public Collection<ScreenshotDescriptor> createStaticPaintFieldScreenshots()
 	{
-		Collection<ScreenshotDescriptor> fieldScreenshots = SampleUtil.createStaticPaintFieldScreenshots(ColorConstants.class);
-		return fieldScreenshots;
+		return SampleUtil.createStaticPaintFieldScreenshots(ColorConstants.class);
 	}
 
 }
