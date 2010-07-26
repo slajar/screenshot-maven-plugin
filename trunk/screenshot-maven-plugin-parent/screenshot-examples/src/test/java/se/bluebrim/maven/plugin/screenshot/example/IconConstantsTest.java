@@ -3,14 +3,12 @@ package se.bluebrim.maven.plugin.screenshot.example;
 import java.util.Collection;
 
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import org.jdesktop.swingx.JXFrame;
 
 import se.bluebrim.maven.plugin.screenshot.Screenshot;
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
-import se.bluebrim.maven.plugin.screenshot.ScreenshotTest;
 import se.bluebrim.maven.plugin.screenshot.sample.PalettePanel;
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 
