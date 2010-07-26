@@ -21,7 +21,6 @@
 			<artifactId>swingx</artifactId>
 			<version>1.6</version>
 			<type>jar</type>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.miglayout</groupId>
