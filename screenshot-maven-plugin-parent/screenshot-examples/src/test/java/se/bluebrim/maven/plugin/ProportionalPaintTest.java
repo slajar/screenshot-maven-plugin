@@ -44,8 +44,8 @@ public class ProportionalPaintTest {
 
 	private JPanel testProportionalPaint()
 	{
-		final Point2D pt1 = new Point2D.Double(0, 0);
-		final Point2D pt2 = new Point2D.Double(0.5, 1);				
+		final Point2D pt1 = new Point2D.Double(0, 0.35);
+		final Point2D pt2 = new Point2D.Double(0.32, 1);				
 		
 		final JPanel panel = new JPanel(new MigLayout());
 
