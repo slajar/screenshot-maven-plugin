@@ -1,0 +1,9 @@
+- Add samples from http://www.jug-muenster.de/swing-worldclock-427
+
+- Have a look at to http://www.piccolo2d.org/
+
+<dependency>
+  <groupId>org.piccolo2d</groupId>
+  <artifactId>piccolo2d-core</artifactId>
+  <version>1.2.1</version>
+</dependency>
