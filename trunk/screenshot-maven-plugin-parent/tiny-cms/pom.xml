@@ -7,7 +7,7 @@
 	</parent>
 	<artifactId>tiny-cms</artifactId>
 	<packaging>war</packaging>
-	<name>Simple Content Management System</name>
+	<name>Tiny Content Management System</name>
 	<properties>
 		<images-base-url>http://localhost:8080/tiny-cms/file/</images-base-url>
 	</properties>
@@ -52,6 +52,7 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
+	<description>Very small end and simple content management system used to show how a screen shots created by the screenshot-maven-plugin can be part of a documentation workflow.</description>
 	<build>
 		<finalName>tiny-cms</finalName>
 		<plugins>
