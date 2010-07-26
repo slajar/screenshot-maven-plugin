@@ -79,7 +79,12 @@ public class ProportionalPaintTest {
 
 	private MattePainter createMattePainter(Point2D pt1, Point2D pt2) 
 	{
-		MattePainter mattePainter = new MattePainter(new ProportionalPaint( new GradientPaint(new Point2D.Double(pt1.getX(), pt1.getY()), new Color(0xdde5eb), new Point2D.Double(pt2.getX(), pt2.getY()),  new Color(0xfafbfc)) ), false);
+//		Color color1 = new Color(0xdde5eb);
+//		Color color2 = new Color(0xfafbfc);
+		Color color1 = Color.BLUE;
+		Color color2 = Color.GREEN;
+//		MattePainter mattePainter = new MattePainter(new ProportionalPaint( new GradientPaint(new Point2D.Double(pt1.getX(), pt1.getY()), color1, new Point2D.Double(pt2.getX(), pt2.getY()),  color2) ), false);
+		MattePainter mattePainter = new MattePainter( new GradientPaint(new Point2D.Double(pt1.getX(), pt1.getY()), color1, new Point2D.Double(pt2.getX(), pt2.getY()),  color2), true);
 		mattePainter.setCacheable(false);
 		return mattePainter;
 	}
