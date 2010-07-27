@@ -57,7 +57,7 @@ public class ProportionalPaint implements Paint {
                                       RenderingHints hints)
     {
         AffineTransform at2 = new AffineTransform(at);
-//        at2.translate(usrBounds.getX(), usrBounds.getY());
+//        at2.translate(usrBounds.getX(), usrBounds.getY());  Works better without this/ Goran Stack
         at2.scale(usrBounds.getWidth(), usrBounds.getHeight());
         return origPaint.createContext(cm, devBounds,
                                        new Rectangle(0, 0, 1, 1),
