@@ -48,7 +48,7 @@ public class PalettePanel extends JPanel
 	{
 		final PalettePanel panel = new PalettePanel(noOfColumns);
 		
-		SampleUtil.eachStaticField(ofClass, Paint.class, new StaticFieldVisitor() {
+		SampleUtil.eachStaticField(ofClass, fieldType, new StaticFieldVisitor() {
 			
 			@Override
 			public void visit(Object value, Field field) 
