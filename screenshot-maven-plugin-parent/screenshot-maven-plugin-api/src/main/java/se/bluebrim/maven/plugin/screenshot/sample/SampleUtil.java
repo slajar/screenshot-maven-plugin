@@ -1,5 +1,7 @@
 package se.bluebrim.maven.plugin.screenshot.sample;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Paint;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +15,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
+import se.bluebrim.maven.plugin.screenshot.sample.FontChartPanel.FontPanel;
 
 /**
  * 
@@ -147,6 +150,25 @@ public class SampleUtil {
 			}
 		});
 		return icontSamples;
+	}
+
+	public static Collection<ScreenshotDescriptor> createStaticFontMethodScreenshots(final Class<?> ofClass) 
+	{
+		final List<ScreenshotDescriptor> screenshots = new ArrayList<ScreenshotDescriptor>();
+		SampleUtil.eachStaticMethod(ofClass, Font.class, new StaticMethodVisitor() {
+			
+			@Override
+			public void visit(Object returnValue, Method method) {
+				if (returnValue != null) {
+					JLabel pangramLabel = FontPanel.createPangramSample((Font)returnValue);
+					pangramLabel.setBackground(Color.WHITE);
+					pangramLabel.setOpaque(true);
+					screenshots.add(new ScreenshotDescriptor(pangramLabel, ofClass, method.getName()));
+				}
+				
+			}
+		});
+		return screenshots;
 	}
 
 

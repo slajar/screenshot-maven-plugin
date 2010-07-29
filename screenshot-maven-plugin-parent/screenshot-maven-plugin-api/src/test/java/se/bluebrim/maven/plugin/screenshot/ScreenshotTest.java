@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -123,26 +124,12 @@ public class ScreenshotTest {
 	@Screenshot
 	public JPanel testFontChartPanel()
 	{
+		Locale.setDefault(Locale.ENGLISH);
 		return FontChartPanel.createFromStaticFontMethods(FontFactory.class);
 	}
 	
 	public static class FontFactory
 	{
-		public static Font getDialogInput12()
-		{
-			return new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
-		}
-
-		public static Font getDialog12()
-		{
-			return new Font(Font.DIALOG, Font.PLAIN, 12);
-		}
-
-		public static Font getMonoSpaced9()
-		{
-			return new Font(Font.MONOSPACED, Font.PLAIN, 9);
-		}
-
 		public static Font getSerif14()
 		{
 			return new Font(Font.SERIF, Font.PLAIN, 14);
@@ -187,8 +174,6 @@ public class ScreenshotTest {
 		{
 			return new Font(Font.SANS_SERIF, Font.ITALIC, 14);
 		}
-
-
 
 	}
 	
