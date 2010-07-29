@@ -53,13 +53,12 @@ public class IconConstantsTest {
 
 	
 	/**
-	 * Creates a screen shot for each method in the PaintFactory 
+	 * Creates a screen shot for each method in the IconConstants class 
 	 */
 	@Screenshot
-	public Collection<ScreenshotDescriptor> createStaticPaintFieldScreenshots()
+	public Collection<ScreenshotDescriptor> createStaticFieldScreenshots()
 	{
-		Collection<ScreenshotDescriptor> fieldScreenshots = SampleUtil.createStaticIconFieldScreenshots(IconConstants.class);
-		return fieldScreenshots;
+		return SampleUtil.createStaticIconFieldScreenshots(IconConstants.class);
 	}
 
 }

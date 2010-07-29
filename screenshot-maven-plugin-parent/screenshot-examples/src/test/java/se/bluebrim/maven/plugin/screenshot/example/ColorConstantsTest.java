@@ -12,7 +12,7 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 /**
  * Demonstrates how to create screenshots for a constant class containing visualizable resources.
  * In this case we are working with Colors but anything that can be painted by a Swing component will do.
- * {@code ColorConstantsTest} creates one gallery screenshot for the Javadoc of the ColorConstant class
+ * {@code ColorConstantsTest} creates one gallery screenshot for the Javadoc of the {@code ColorConstant} class
  * and one screenshot to be included in the Javadoc for each static field declaration. The {@code @Screenshot}
  * annotaded methods are processed by the screenshot:javadoc goal and stores the images files in a "doc-files" directory
  * following Javadoc conventions.
@@ -31,10 +31,10 @@ public class ColorConstantsTest {
 
 	
 	/**
-	 * Creates a screen shot for each method in the PaintFactory 
+	 * Creates a screen shot for each field in the ColorConstants class
 	 */
 	@Screenshot
-	public Collection<ScreenshotDescriptor> createStaticPaintFieldScreenshots()
+	public Collection<ScreenshotDescriptor> createStaticFieldScreenshots()
 	{
 		return SampleUtil.createStaticPaintFieldScreenshots(ColorConstants.class);
 	}
