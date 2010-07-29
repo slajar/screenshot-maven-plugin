@@ -52,7 +52,7 @@ public class UploadServlet extends AbstractCmsServlet {
 			createDirIfMissing(saveDirectory);
 			saveDirectoryPath = saveDirectory.getPath();
 		}
-		MultipartRequest multipart = new MultipartRequest(request, saveDirectoryPath, 8000000);
+		MultipartRequest multipart = new MultipartRequest(request, saveDirectoryPath, 10000000);
 	
 		Enumeration fileNames = multipart.getFileNames();
 		while (fileNames.hasMoreElements()) {
@@ -60,7 +60,7 @@ public class UploadServlet extends AbstractCmsServlet {
 			String fileName = (String) fileNames.nextElement();
 			response.setContentType("text/html");
 			PrintWriter output = response.getWriter();
-			output.println("Uploaded file: " + fileName + " to directory: " + saveDirectoryPath + "<br>");			
+			output.println("Received an uploaded file: " + fileName + ". Saving it to directory: " + saveDirectoryPath + "<br>");			
 		}
 	
 	}
