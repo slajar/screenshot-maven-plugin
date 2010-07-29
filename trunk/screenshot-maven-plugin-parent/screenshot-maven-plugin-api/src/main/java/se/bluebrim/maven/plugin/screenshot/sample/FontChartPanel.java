@@ -22,6 +22,8 @@ import java.util.Map.Entry;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.apache.commons.lang.builder.CompareToBuilder;
+
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor;
@@ -48,22 +50,18 @@ public class FontChartPanel extends JPanel
 	public static class FontPanel extends JPanel implements Comparable<FontChartPanel.FontPanel>
 	{
 		private static final float FONT_SAMPLE_SIZE = 16f;		// The size of the character set and digits sample
-		private static final NumberFormat FONT_SIZE_FORMAT = NumberFormat.getNumberInstance();
-		{
-			FONT_SIZE_FORMAT.setMinimumFractionDigits(0);		// Avoid to display font size as 22.0 but enable display of font size 22.5
-		}
 		private Font font;
 		
 		public FontPanel(Font font, String fontSource) 
 		{
 			this.font = font;
 			setBackground(Color.WHITE);
-			setLayout(new MigLayout(new LC().wrapAfter(1)));
+			setLayout(new MigLayout(new LC().wrapAfter(1).insets("10 0 10 10")));
 			addInfoLine(BUNDLE.getString("font.label") + ": " + getFontName());
 			if (fontSource != null)
 				addInfoLine(BUNDLE.getString("font.source") + ": " + fontSource);
-			addSampleLine(font, BUNDLE, "font.characterset");
-			addSampleLine(font, BUNDLE, "font.digits");
+			addSampleLine(font, "font.characterset");
+			addSampleLine(font, "font.digits");
 		}
 	
 		/**
@@ -82,15 +80,7 @@ public class FontChartPanel extends JPanel
 			infoLine.setForeground(INFO_COLOR);
 			add(infoLine, "growx");			
 		}
-		
-		private String getFontSpec() {
-			return getFontName() + " " + getFontSize();
-		}
-	
-		public String getFontSize() {
-			return FONT_SIZE_FORMAT.format(font.getSize2D());
-		}
-	
+			
 		public String getFontName() {
 			return font.getFontName();
 		}
@@ -100,30 +90,41 @@ public class FontChartPanel extends JPanel
 			return font;
 		}
 	
-		private void addSampleLine(Font font, ResourceBundle bundle, String key) {
-			JLabel fontSample = new BestRenderQualityLabel(bundle.getString(key), font.deriveFont(FONT_SAMPLE_SIZE));
+		private void addSampleLine(Font font, String key) {
+			JLabel fontSample = new BestRenderQualityLabel(BUNDLE.getString(key), font.deriveFont(FONT_SAMPLE_SIZE));
 			add(fontSample, "growx");
+		}
+		
+		public static JLabel createPangramSample(Font font)
+		{
+			return new BestRenderQualityLabel(BUNDLE.getString("font.pangram"), font);
 		}
 		
 		@Override
 		public int compareTo(FontChartPanel.FontPanel panel) {
-	
-			return getFontSpec().compareTo(panel.getFontSpec());
+			
+			CompareToBuilder compareToBuilder = new CompareToBuilder();
+			compareToBuilder.append(getFontName(), panel.getFontName());
+			compareToBuilder.append(font.getSize2D(), panel.font.getSize2D());
+			return compareToBuilder.toComparison();
 		}
 	}
 
-	public static class FontSizeSamplePanel extends JPanel
+	public static class FontSizeLabel extends JLabel
 	{
-		public FontSizeSamplePanel(FontChartPanel.FontPanel fontPanel) 
+		private static final NumberFormat FONT_SIZE_FORMAT = NumberFormat.getNumberInstance();
 		{
-			setLayout(new MigLayout());
-			setOpaque(false);
-			JLabel sizeLabel = new JLabel(fontPanel.getFontSize());
-			sizeLabel.setFont(INFO_FONT);
-			sizeLabel.setForeground(INFO_COLOR);
-			add(sizeLabel);
-			add(new BestRenderQualityLabel(BUNDLE.getString("font.pangram"), fontPanel.font));
+			FONT_SIZE_FORMAT.setMinimumFractionDigits(0);		// Avoid to display font size as 22.0 but enable display of font size 22.5
 		}
+
+		public FontSizeLabel(Font font) 
+		{
+			super(FONT_SIZE_FORMAT.format(font.getSize2D()));
+			setOpaque(false);
+			setFont(INFO_FONT);
+			setForeground(INFO_COLOR);
+		}		
+
 	}
 
 	public static class DividerPanel extends JPanel
@@ -228,12 +229,12 @@ public class FontChartPanel extends JPanel
 	
 	/**
 	 * 
-	 * @param fontsWithSource a map containing the fonts to display in the font chart. Each font has an associated source.
+	 * @param fontsWithSource is a map containing the fonts to display in the font chart. Each font has an associated source.
 	 * The source can for example specify the class and the static method that provides the font
 	 */
 	public FontChartPanel(Map<Font, String> fontsWithSource)
 	{
-		setLayout(new MigLayout(new LC().wrapAfter(1).alignX("left")));
+		setLayout(new MigLayout(new LC().wrapAfter(2).alignX("left")));
 		setBackground(Color.WHITE);
 		final List<FontChartPanel.FontPanel> samples = new ArrayList<FontChartPanel.FontPanel>();
 		
@@ -249,12 +250,15 @@ public class FontChartPanel extends JPanel
 			if (!fontPanel.getFontName().equals(fontName))
 			{
 				if (fontName != null)
-					add(new DividerPanel(), "growx");
-				add(fontPanel, "growx");
+					add(new DividerPanel(), "span 2, growx");
+				add(fontPanel, "span 2");
 				fontName = fontPanel.getFontName();
 			} 
 			if (!fontPanel.isOnePointSize())
-				add(new FontSizeSamplePanel(fontPanel), "growx");
+			{
+				add(new FontSizeLabel(fontPanel.font));
+				add(FontPanel.createPangramSample(fontPanel.font));
+			}
 		}			
 	}
 }
