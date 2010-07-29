@@ -1,6 +1,7 @@
 package se.bluebrim.maven.plugin.screenshot;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Insets;
@@ -11,8 +12,12 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+
+import net.miginfocom.layout.LC;
+import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.swingx.JXFrame;
 
@@ -23,6 +28,7 @@ import se.bluebrim.maven.plugin.screenshot.decorate.DecoratorUtils;
 import se.bluebrim.maven.plugin.screenshot.decorate.Emphasizer;
 import se.bluebrim.maven.plugin.screenshot.decorate.FrameDecorator;
 import se.bluebrim.maven.plugin.screenshot.decorate.ScreenshotDecorator;
+import se.bluebrim.maven.plugin.screenshot.sample.FontChartPanel;
 import se.bluebrim.maven.plugin.screenshot.sample.NamedSamplePanel;
 import se.bluebrim.maven.plugin.screenshot.sample.PaintSamplePanel;
 import se.bluebrim.maven.plugin.screenshot.sample.PalettePanel;
@@ -114,19 +120,91 @@ public class ScreenshotTest {
 		return panel;
 	}
 	
-	@Screenshot (targetClass=PaintSamplePanel.class)
+	@Screenshot
+	public JPanel testFontChartPanel()
+	{
+		return FontChartPanel.createFromStaticFontMethods(FontFactory.class);
+	}
+	
+	public static class FontFactory
+	{
+		public static Font getDialogInput12()
+		{
+			return new Font(Font.DIALOG_INPUT, Font.PLAIN, 12);
+		}
+
+		public static Font getDialog12()
+		{
+			return new Font(Font.DIALOG, Font.PLAIN, 12);
+		}
+
+		public static Font getMonoSpaced9()
+		{
+			return new Font(Font.MONOSPACED, Font.PLAIN, 9);
+		}
+
+		public static Font getSerif14()
+		{
+			return new Font(Font.SERIF, Font.PLAIN, 14);
+		}
+		
+		public static Font getSerifBold14()
+		{
+			return new Font(Font.SERIF, Font.BOLD, 14);
+		}
+		
+		public static Font getSerifItalic14()
+		{
+			return new Font(Font.SERIF, Font.ITALIC, 14);
+		}
+		
+		public static Font getSansSerif14()
+		{
+			return new Font(Font.SANS_SERIF, Font.PLAIN, 14);
+		}
+		
+		public static Font getSansSerif9()
+		{
+			return new Font(Font.SANS_SERIF, Font.PLAIN, 9);
+		}
+		
+		public static Font getSansSerif20()
+		{
+			return new Font(Font.SANS_SERIF, Font.PLAIN, 20);
+		}
+		
+		public static Font getSansSerif28()
+		{
+			return new Font(Font.SANS_SERIF, Font.PLAIN, 28);
+		}
+		
+		public static Font getSansSerifBold14()
+		{
+			return new Font(Font.SANS_SERIF, Font.BOLD, 14);
+		}
+		
+		public static Font getSansSerifItalic14()
+		{
+			return new Font(Font.SANS_SERIF, Font.ITALIC, 14);
+		}
+
+
+
+	}
+	
+	@Screenshot
 	public JPanel testPaintSamplePanel()
 	{
 		return new PaintSamplePanel(Color.ORANGE);
 	}
 	
-	@Screenshot (targetClass=NamedSamplePanel.class)
+	@Screenshot
 	public JPanel testNamedSamplePanel()
 	{
 		return new NamedSamplePanel(new PaintSamplePanel(Color.ORANGE), "ORANGE");
 	}
 	
-	@Screenshot (targetClass=PalettePanel.class)
+	@Screenshot
 	public JPanel textPalettePanel()
 	{
 		PalettePanel panel = new PalettePanel(4);
@@ -152,14 +230,15 @@ public class ScreenshotTest {
 			@Override
 			public void run() {
 				instance.openInWindow();
+				instance.openFontChartWindow();
 			}
 		});
 	}
 
-	protected void openInWindow()
+	private void openInWindow()
 	{
 		JXFrame window = new JXFrame(getClass().getSimpleName(), true);
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new MigLayout(new LC().wrapAfter(1)));
 		panel.add(createFrameDecoratorPanel());
 		panel.add(createCalloutDecoratorPanel());
 		panel.add(createCompositeDecoratorPanel());
@@ -173,6 +252,17 @@ public class ScreenshotTest {
 		window.setVisible(true);		
 	}
 	
+	private void openFontChartWindow()
+	{
+		JXFrame window = new JXFrame(getClass().getSimpleName(), true);
+		window.getContentPane().add(new JScrollPane(testFontChartPanel()));
+		window.setSize(1280, 1024);
+		window.setLocationRelativeTo(null);
+		window.setVisible(true);		
+	}
+
+	
+	@SuppressWarnings("serial")
 	private static class DecoratedPanel extends JPanel
 	{
 		@Override
