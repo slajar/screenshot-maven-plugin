@@ -111,7 +111,7 @@ public class SampleUtil {
 	public static Collection<ScreenshotDescriptor> createStaticIconFieldScreenshots(final Class<?> ofClass)
 	{
 		final List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticField(ofClass, Paint.class, new StaticFieldVisitor() {
+		eachStaticField(ofClass, Icon.class, new StaticFieldVisitor() {
 			
 			@Override
 			public void visit(Object value, Field field) {
@@ -149,7 +149,7 @@ public class SampleUtil {
 	public static Collection<ScreenshotDescriptor> createStaticIconMethodScreenshots(final Class<?> ofClass)
 	{
 		final List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticMethod(ofClass, Paint.class, new StaticMethodVisitor() {
+		eachStaticMethod(ofClass, ofClass, new StaticMethodVisitor() {
 			
 			@Override
 			public void visit(Object returnValue, Method method) {
