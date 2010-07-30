@@ -153,10 +153,6 @@ public class FontChartPanel extends JPanel
 	{
 		private static HashMap<Font, FontMetrics> FONT_METRICS = new HashMap<Font, FontMetrics>();
 
-		/**
-		 * Append some spaces to the text since JLabel preferred size measurement do not
-		 * measure the text based on the renderings hints that we set in the paint method.
-		 */
 		public BestRenderQualityLabel(String string, Font font) 
 		{
 			super(string);
