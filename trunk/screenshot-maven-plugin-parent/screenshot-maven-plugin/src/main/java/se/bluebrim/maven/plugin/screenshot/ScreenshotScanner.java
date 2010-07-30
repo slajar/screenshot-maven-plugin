@@ -118,7 +118,7 @@ public abstract class ScreenshotScanner {
 				FileUtils.copyFile(tempFile, originalFile);
 				getLog().info("Saved screenshot to: " + originalFile.getName() + " " + originalFile.getPath());
 			} else
-				getLog().info("Screenshot unchanged: " + originalFile.getName() + " "  + originalFile.getPath());
+				getLog().debug("Screenshot unchanged: " + originalFile.getName() + " "  + originalFile.getPath());
 				
 		} catch (IOException e)
 		{
