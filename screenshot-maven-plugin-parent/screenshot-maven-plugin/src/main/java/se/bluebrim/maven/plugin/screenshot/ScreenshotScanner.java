@@ -52,7 +52,6 @@ import com.keypoint.PngEncoder;
  * @author G Stack
  *
  */
-@SuppressWarnings("restriction")
 public abstract class ScreenshotScanner {
 
 	protected static final String FORMAT_PNG = "png";
@@ -83,9 +82,9 @@ public abstract class ScreenshotScanner {
 		this.scaleFactor = scaleFactor;
 	}
 
-	protected abstract void handleFoundMethod(Class candidateClass, Method method);
+	protected abstract void handleFoundMethod(Class<?> candidateClass, Method method);
 	
-	protected File createScreenshotFile(JComponent screenShotComponent, Class screenshotClass, File dir, Method method) 
+	protected File createScreenshotFile(JComponent screenShotComponent, Class<?> screenshotClass, File dir, Method method) 
 	{
 		String screenshotName = createScreenshotName(screenshotClass, method);
 		return createScreenshotFile(screenShotComponent, dir, screenshotName);
@@ -100,12 +99,12 @@ public abstract class ScreenshotScanner {
 		return file;
 	}
 
-	protected String createScreenshotName(Class screenshotClass, Method method) 
+	protected String createScreenshotName(Class<?> screenshotClass, Method method) 
 	{
 		return createScreenshotName(screenshotClass, method, false);
 	}
 	
-	protected String createScreenshotName(Class screenshotClass, Method method, boolean appendLocale) 
+	protected String createScreenshotName(Class<?> screenshotClass, Method method, boolean appendLocale) 
 	{
 		String locale = appendLocale ?  "-" + Locale.getDefault().toString() : "";
 		return screenshotClass.getSimpleName() + getSceneName(method) + locale;
@@ -117,11 +116,13 @@ public abstract class ScreenshotScanner {
 			if (!FileUtils.contentEquals(originalFile, tempFile))
 			{
 				FileUtils.copyFile(tempFile, originalFile);
-				getLog().info("Saved screenshot to: " + originalFile.getPath());
-			}
+				getLog().info("Saved screenshot to: " + originalFile.getName() + " " + originalFile.getPath());
+			} else
+				getLog().info("Screenshot unchanged: " + originalFile.getName() + " "  + originalFile.getPath());
+				
 		} catch (IOException e)
 		{
-			throw new RuntimeException("Unable to save screenshot: " + originalFile.getPath(), e);
+			throw new RuntimeException("Unable to save screenshot: " + originalFile.getName() + " " + originalFile.getPath(), e);
 		} finally
 		{
 			tempFile.delete();
@@ -144,9 +145,9 @@ public abstract class ScreenshotScanner {
 	 * @return The class that should be associated with the screenshot. There are cases where the screenShotComponent
 	 * is a generic panel class containing the specific screenshot class.
 	 */
-	protected Class getTargetClass(Method method, JComponent screenShotComponent)
+	protected Class<?> getTargetClass(Method method, JComponent screenShotComponent)
 	{		
-		Class targetClass = (Class) retrieveAnnotationPropertyValue(method, "targetClass");
+		Class<?> targetClass = (Class<?>) retrieveAnnotationPropertyValue(method, "targetClass");
 		return ObjectUtils.Null.class.getName().equals(targetClass.getName())  ? screenShotComponent.getClass()  : targetClass;		
 	}
 	
@@ -282,12 +283,13 @@ public abstract class ScreenshotScanner {
 	/**
 	 * Process classes with one ore more screenshot annotated method
 	 */
+	@SuppressWarnings("unchecked")
 	private void processCandidateClasses(Set<BeanDefinition> candidateComponents, ClassLoader classLoader, Class screenshotAnnotation)
 	{
 		for (BeanDefinition bd : candidateComponents)
 		{
 			getLog().debug("Found screenshot annotaded class: " + bd.getBeanClassName());
-			Class candidateClass = loadClass(bd.getBeanClassName() ,classLoader);
+			Class<?> candidateClass = loadClass(bd.getBeanClassName() ,classLoader);
 
 			for (Method method : candidateClass.getMethods())
 			{
@@ -301,7 +303,7 @@ public abstract class ScreenshotScanner {
 		}
 	}
 
-	private Class loadClass(String testClassName, ClassLoader classLoader)
+	private Class<?> loadClass(String testClassName, ClassLoader classLoader)
 	{
 		try
 		{
@@ -356,7 +358,7 @@ public abstract class ScreenshotScanner {
 		}			
 	}
 
-	private void handleExceptionInCalledMethod(Class targetClass, Method screenshotMethod, Exception e)
+	private void handleExceptionInCalledMethod(Class<?> targetClass, Method screenshotMethod, Exception e)
 	{
 		getLog().info("Unable to create screenshot by calling: " + targetClass.getName() + "." + screenshotMethod.getName(), e);
 	}
@@ -593,6 +595,7 @@ public abstract class ScreenshotScanner {
 		return new URLClassLoader(urls.toArray(new URL[urls.size()]), Thread.currentThread().getContextClassLoader());
 	}
 
+	@SuppressWarnings("unchecked")
 	private Class<Screenshot> loadAnnotationClass(String className, ClassLoader classLoader)
 	{
 		try

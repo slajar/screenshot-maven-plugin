@@ -54,11 +54,19 @@ public class SampleUtil {
 		}
 	}
 	
+	/**
+	 * <p>
+	 * Only non argument methods is visited.
+	 * </p>
+	 * @param ofClass the class whose methods will be visited
+	 * @param returnType only methods of this return type will be visited 
+	 * @param visitor the visit method in the visitor will be called for each method
+	 */
 	public static void eachStaticMethod(Class<?> ofClass, Class<?> returnType, StaticMethodVisitor visitor)
 	{
-		Method[] methods = ofClass.getMethods();
+		Method[] methods = ofClass.getDeclaredMethods();
 		for (Method method : methods) {
-			if (returnType.isAssignableFrom(method.getReturnType()) && Modifier.isStatic(method.getModifiers()))
+			if (returnType.isAssignableFrom(method.getReturnType()) && Modifier.isStatic(method.getModifiers()) && method.getParameterTypes().length == 0)
 			{
 				Object returnValue;
 					try {
