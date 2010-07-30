@@ -2,6 +2,7 @@ package se.bluebrim.maven.plugin.screenshot.sample;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.Paint;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -12,6 +13,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 import se.bluebrim.maven.plugin.screenshot.ScreenshotDescriptor;
@@ -83,6 +85,53 @@ public class SampleUtil {
 		}
 	}
 
+
+	public static Collection<ScreenshotDescriptor> createStaticFieldScreenshots(final Class<?> ofClass, Class<?> returnType)
+	{
+		final List<ScreenshotDescriptor> screenshotDescriptors = new ArrayList<ScreenshotDescriptor>();
+		eachStaticField(ofClass, returnType, new StaticFieldVisitor() {
+			
+			@Override
+			public void visit(Object value, Field field) {
+				screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, field.getName().toLowerCase()) );
+				
+			}
+		});
+		return screenshotDescriptors;
+	}
+	
+	public static Collection<ScreenshotDescriptor> createStaticMethodScreenshots(final Class<?> ofClass, Class<?> returnType)
+	{
+		final List<ScreenshotDescriptor> screenshotDescriptors = new ArrayList<ScreenshotDescriptor>();
+		eachStaticMethod(ofClass, returnType, new StaticMethodVisitor() {
+			
+			@Override
+			public void visit(Object value, Method method) {
+				screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, method.getName().toLowerCase()) );
+				
+			}
+		});
+		return screenshotDescriptors;
+	}
+	
+	private static ScreenshotDescriptor createScreenshotDescriptor(Object motif, Class<?> targetClass, String scene)
+	{
+		if (motif instanceof Paint)
+			return new ScreenshotDescriptor(new PaintSamplePanel( (Paint)motif ), targetClass, scene);
+		else if (motif instanceof Icon)
+			return new ScreenshotDescriptor(new JLabel( (Icon)motif ), targetClass, scene);
+		else if (motif instanceof Image)
+			return new ScreenshotDescriptor(new JLabel( new ImageIcon((Image)motif )), targetClass, scene);
+		else if (motif instanceof Font)
+		{
+			JLabel pangramLabel = FontPanel.createPangramSample( (Font)motif );
+			pangramLabel.setBackground(Color.WHITE);
+			pangramLabel.setOpaque(true);
+			return new ScreenshotDescriptor(pangramLabel, targetClass, scene);
+		} else
+			throw new IllegalArgumentException("The screenshot motif type must be Paint, Icon, Image or Font. Got: " + motif.getClass().getSimpleName());
+			
+	}
 	
 	/**
 	 * 
@@ -91,35 +140,37 @@ public class SampleUtil {
 	 */
 	public static Collection<ScreenshotDescriptor> createStaticPaintFieldScreenshots(final Class<?> ofClass)
 	{
-		final List<ScreenshotDescriptor> paintSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticField(ofClass, Paint.class, new StaticFieldVisitor() {
-			
-			@Override
-			public void visit(Object value, Field field) {
-				paintSamples.add(new ScreenshotDescriptor(new PaintSamplePanel( (Paint)value ), ofClass, field.getName().toLowerCase()));
-				
-			}
-		});
-		return paintSamples;
+		return createStaticFieldScreenshots(ofClass, Paint.class);
 	}
 	
 	/**
 	 * 
 	 * @return A Collection of ScreenshotDescriptor's for each static field returning
-	 * a Paint typed object.
+	 * a Icon typed object.
 	 */
 	public static Collection<ScreenshotDescriptor> createStaticIconFieldScreenshots(final Class<?> ofClass)
 	{
-		final List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticField(ofClass, Icon.class, new StaticFieldVisitor() {
-			
-			@Override
-			public void visit(Object value, Field field) {
-				icontSamples.add(new ScreenshotDescriptor(new JLabel( (Icon)value ), ofClass, field.getName().toLowerCase()));
-				
-			}
-		});
-		return icontSamples;
+		return createStaticFieldScreenshots(ofClass, Icon.class);
+	}
+	
+	/**
+	 * 
+	 * @return A Collection of ScreenshotDescriptor's for each static field returning
+	 * a Icon typed object.
+	 */
+	public static Collection<ScreenshotDescriptor> createStaticFontFieldScreenshots(final Class<?> ofClass)
+	{
+		return createStaticFieldScreenshots(ofClass, Font.class);
+	}
+	
+	/**
+	 * 
+	 * @return A Collection of ScreenshotDescriptor's for each static field returning
+	 * a Image typed object.
+	 */
+	public static Collection<ScreenshotDescriptor> createStaticImageFieldScreenshots(final Class<?> ofClass)
+	{
+		return createStaticFieldScreenshots(ofClass, Image.class);
 	}
 	
 	/**
@@ -129,54 +180,37 @@ public class SampleUtil {
 	 */
 	public static Collection<ScreenshotDescriptor> createStaticPaintMethodScreenshots(final Class<?> ofClass)
 	{
-		final List<ScreenshotDescriptor> paintSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticMethod(ofClass, Paint.class, new StaticMethodVisitor() {
-			
-			@Override
-			public void visit(Object returnValue, Method method) {
-				paintSamples.add(new ScreenshotDescriptor(new PaintSamplePanel( (Paint)returnValue ), ofClass,method.getName().toLowerCase()));
-				
-			}
-		});
-		return paintSamples;
+		return createStaticMethodScreenshots(ofClass, Paint.class);
 	}
 	
 	/**
 	 * 
 	 * @return A Collection of ScreenshotDescriptor's for each static method returning
-	 * a Paint typed object.
+	 * an Icon typed object.
 	 */
 	public static Collection<ScreenshotDescriptor> createStaticIconMethodScreenshots(final Class<?> ofClass)
 	{
-		final List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticMethod(ofClass, Icon.class, new StaticMethodVisitor() {
-			
-			@Override
-			public void visit(Object returnValue, Method method) {
-				icontSamples.add(new ScreenshotDescriptor(new JLabel( (Icon)returnValue ), ofClass, method.getName().toLowerCase()));
-				
-			}
-		});
-		return icontSamples;
+		return createStaticMethodScreenshots(ofClass, Icon.class);
 	}
 
+	/**
+	 * 
+	 * @return A Collection of ScreenshotDescriptor's for each static method returning
+	 * a Font typed object.
+	 */
 	public static Collection<ScreenshotDescriptor> createStaticFontMethodScreenshots(final Class<?> ofClass) 
 	{
-		final List<ScreenshotDescriptor> screenshots = new ArrayList<ScreenshotDescriptor>();
-		SampleUtil.eachStaticMethod(ofClass, Font.class, new StaticMethodVisitor() {
-			
-			@Override
-			public void visit(Object returnValue, Method method) {
-				if (returnValue != null) {
-					JLabel pangramLabel = FontPanel.createPangramSample((Font)returnValue);
-					pangramLabel.setBackground(Color.WHITE);
-					pangramLabel.setOpaque(true);
-					screenshots.add(new ScreenshotDescriptor(pangramLabel, ofClass, method.getName()));
-				}
-				
-			}
-		});
-		return screenshots;
+		return createStaticMethodScreenshots(ofClass, Font.class);
+	}
+
+	/**
+	 * 
+	 * @return A Collection of ScreenshotDescriptor's for each static method returning
+	 * a Image typed object.
+	 */
+	public static Collection<ScreenshotDescriptor> createStaticImageMethodScreenshots(final Class<?> ofClass) 
+	{
+		return createStaticMethodScreenshots(ofClass, Image.class);
 	}
 
 

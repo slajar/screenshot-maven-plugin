@@ -30,12 +30,15 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor
 
 /**
  * <p>
- * Displays the specified fonts with using pangram and character sets. 
- * Various sizes of the same font are displayed if you provide these various fonts
- * in the specified font map.
+ * The {@code FontChartPanel} draw an example of each specified font using a pangram and a character sets. 
+ * Various sizes of the same font are grouped together. The fonts are specified as a Map to enable each font
+ * to be associated with a string that is drawn as the font source.
  * </p>
  * 
  * <img src="doc-files/FontChartPanel.png">
+ *  
+ * TODO: Add a font metric figure according to: http://www.pyglet.org/doc/programming_guide/font_metrics.png and
+ * http://www.myfirstfont.com/glossary.html
  * 
  * @author Goran Stack
  *
