@@ -9,3 +9,5 @@
 </dependency>
 
 - Show how to use a real CMS such as MindTouch
+
+- Improve the FontChartPanel with font metrics
