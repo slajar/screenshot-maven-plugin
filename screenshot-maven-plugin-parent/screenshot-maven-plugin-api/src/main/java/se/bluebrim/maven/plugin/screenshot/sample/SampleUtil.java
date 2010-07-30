@@ -149,7 +149,7 @@ public class SampleUtil {
 	public static Collection<ScreenshotDescriptor> createStaticIconMethodScreenshots(final Class<?> ofClass)
 	{
 		final List<ScreenshotDescriptor> icontSamples = new ArrayList<ScreenshotDescriptor>();
-		eachStaticMethod(ofClass, ofClass, new StaticMethodVisitor() {
+		eachStaticMethod(ofClass, Icon.class, new StaticMethodVisitor() {
 			
 			@Override
 			public void visit(Object returnValue, Method method) {
