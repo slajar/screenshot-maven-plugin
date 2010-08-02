@@ -85,7 +85,10 @@ public class SampleUtil {
 		}
 	}
 
-
+	/**
+	 * Just ignore null value since its common when developing resource classes to have template
+	 * methods returning null.
+	 */
 	public static Collection<ScreenshotDescriptor> createStaticFieldScreenshots(final Class<?> ofClass, Class<?> returnType)
 	{
 		final List<ScreenshotDescriptor> screenshotDescriptors = new ArrayList<ScreenshotDescriptor>();
@@ -93,13 +96,18 @@ public class SampleUtil {
 			
 			@Override
 			public void visit(Object value, Field field) {
-				screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, field.getName().toLowerCase()) );
+				if (value != null)
+					screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, field.getName().toLowerCase()) );
 				
 			}
 		});
 		return screenshotDescriptors;
 	}
 	
+	/**
+	 * Just ignore null value since its common when developing resource classes to have template
+	 * methods returning null.
+	 */
 	public static Collection<ScreenshotDescriptor> createStaticMethodScreenshots(final Class<?> ofClass, Class<?> returnType)
 	{
 		final List<ScreenshotDescriptor> screenshotDescriptors = new ArrayList<ScreenshotDescriptor>();
@@ -107,7 +115,8 @@ public class SampleUtil {
 			
 			@Override
 			public void visit(Object value, Method method) {
-				screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, method.getName().toLowerCase()) );
+				if (value != null)
+					screenshotDescriptors.add(createScreenshotDescriptor( value, ofClass, method.getName().toLowerCase()) );
 				
 			}
 		});

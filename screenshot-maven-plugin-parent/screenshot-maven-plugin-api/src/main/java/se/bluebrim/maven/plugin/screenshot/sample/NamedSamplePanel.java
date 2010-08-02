@@ -5,6 +5,7 @@ import java.awt.Color;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 
+import net.miginfocom.layout.CC;
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
 
@@ -26,7 +27,7 @@ public class NamedSamplePanel extends JXPanel {
 	public NamedSamplePanel(JComponent samplePanel, String name) {
 		setLayout(new MigLayout(new LC().flowY()));
 		setOpaque(false);
-		add(samplePanel, "center");
+		add(samplePanel, new CC().alignX("center").pushY());
 		JLabel label = new JLabel(name);
 		label.setForeground(Color.GRAY);
 		label.setOpaque(false);

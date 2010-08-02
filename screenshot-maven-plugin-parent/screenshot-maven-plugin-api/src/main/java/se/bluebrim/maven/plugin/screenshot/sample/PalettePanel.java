@@ -96,7 +96,7 @@ public class PalettePanel extends JPanel
 	public void addSample(JComponent sample, String name)
 	{
 		JPanel samplePanel = new NamedSamplePanel(sample, name);
-		add(samplePanel, "center");			
+		add(samplePanel, "center, growy");			
 	}
 	
 	public void addSample(Paint paint, String name)
