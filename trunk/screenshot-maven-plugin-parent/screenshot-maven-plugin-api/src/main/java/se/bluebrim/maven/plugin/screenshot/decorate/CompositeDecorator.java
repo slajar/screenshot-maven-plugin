@@ -23,17 +23,7 @@ public class CompositeDecorator implements ScreenshotDecorator
 		this(new ScreenshotDecorator[]{});		
 	}
 	
-	public CompositeDecorator(ScreenshotDecorator decorator) 
-	{
-		this(new ScreenshotDecorator[]{decorator});
-	}
-	
-	public CompositeDecorator(ScreenshotDecorator decorator1, ScreenshotDecorator decorator2) 
-	{
-		this(new ScreenshotDecorator[]{decorator1, decorator2});
-	}
-	
-	public CompositeDecorator(ScreenshotDecorator[] decorators)
+	public CompositeDecorator(ScreenshotDecorator... decorators)
 	{
 		this.decorators = new ArrayList<ScreenshotDecorator>();
 		for (ScreenshotDecorator decorator : decorators)
