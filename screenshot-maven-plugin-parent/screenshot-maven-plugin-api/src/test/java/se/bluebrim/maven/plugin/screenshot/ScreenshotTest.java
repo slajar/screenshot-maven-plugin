@@ -178,6 +178,18 @@ public class ScreenshotTest {
 	}
 	
 	@Screenshot
+	public JComponent testFontPanel()
+	{
+		return new FontChartPanel.FontPanel(new Font(Font.SERIF, Font.PLAIN, 12), "ScreenshotTest.testFontPanel");
+	}
+	
+	@Screenshot
+	public JComponent testFontSizeLabel()
+	{
+		return new FontChartPanel.FontSizeLabel(new Font(Font.SERIF, Font.PLAIN, 12));
+	}
+	
+	@Screenshot
 	public JComponent testFontKerningPanel()
 	{
 		return new FontChartPanel.FontKerningPanel(new Font(Font.SERIF, Font.PLAIN, 1));
