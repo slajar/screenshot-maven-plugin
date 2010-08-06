@@ -53,6 +53,12 @@ public class FontChartPanel extends JPanel
 	private static final Font INFO_FONT = new Font("SansSerif", Font.PLAIN, 12);
 	private static final Color INFO_COLOR = Color.BLACK;		
 
+	/**
+	 * <p>
+	 * A panel that draw font info and sample text of the font. 
+	 * </p>
+	 * <img src="doc-files/FontPanel.png">
+	 */
 	public static class FontPanel extends JPanel implements Comparable<FontChartPanel.FontPanel>
 	{
 		private static final float FONT_SAMPLE_SIZE = 16f;		// The size of the character set and digits sample
@@ -116,6 +122,12 @@ public class FontChartPanel extends JPanel
 		}
 	}
 
+	/**
+	 * <p>
+	 * A panel that draw the font size as a formatted number. 
+	 * </p>
+	 * <img src="doc-files/FontSizeLabel.png">
+	 */
 	public static class FontSizeLabel extends JLabel
 	{
 		private static final NumberFormat FONT_SIZE_FORMAT = NumberFormat.getNumberInstance();
@@ -203,11 +215,11 @@ public class FontChartPanel extends JPanel
 	{		
 		public FontKerningPanel(Font font) {
 			super();
+			setLayout(new MigLayout(new LC().flowY().gridGap("0", "0")));
 			setOpaque(false);
 			setBackground(null);
 			String text = "AV To ";
 			font = font.deriveFont(32f);
-			setLayout(new MigLayout(new LC().flowY()));
 			add(new BestRenderQualityLabel(text, font, false));
 			add(new BestRenderQualityLabel(text, font));
 		}		
@@ -230,7 +242,7 @@ public class FontChartPanel extends JPanel
 			if (kerning)
 			{
 				attributes.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
-				font = new Font(attributes);
+				font = font.deriveFont(attributes);
 			}
 			setFont(font);
 		}
