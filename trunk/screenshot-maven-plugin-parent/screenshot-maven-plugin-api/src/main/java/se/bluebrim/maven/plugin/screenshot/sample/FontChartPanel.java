@@ -1,5 +1,6 @@
 package se.bluebrim.maven.plugin.screenshot.sample;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -7,6 +8,10 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
+import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
@@ -22,10 +27,11 @@ import java.util.Map.Entry;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
-
 import net.miginfocom.layout.LC;
 import net.miginfocom.swing.MigLayout;
+
+import org.apache.commons.lang.builder.CompareToBuilder;
+
 import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor;
 
 /**
@@ -36,9 +42,6 @@ import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil.StaticMethodVisitor
  * </p>
  * 
  * <img src="doc-files/FontChartPanel.png">
- *  
- * TODO: Add a font metric figure according to: http://www.pyglet.org/doc/programming_guide/font_metrics.png and
- * http://www.myfirstfont.com/glossary.html
  * 
  * @author Goran Stack
  *
@@ -151,14 +154,84 @@ public class FontChartPanel extends JPanel
 			return new Dimension(1, 1);
 		}
 	}
+	
+	/**
+	 * <p>
+	 * A panel that illustrates the font metrics by drawing ascender, base and descender line
+	 * on top of text sample with a rather large font size.
+	 * </p>
+	 * <img src="doc-files/FontMetricPanel.png">
+	 */
+	public static class FontMetricPanel extends BestRenderQualityLabel
+	{
+
+		public FontMetricPanel(Font font) 
+		{
+			super(" Kpfx   ", font.deriveFont(48f));
+		}
+		
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
+			Graphics2D g2d = (Graphics2D)g;
+			TextLayout textLayout = new TextLayout(getText(), getFont(), g2d.getFontRenderContext());
+			g2d.setStroke(new BasicStroke(1f));
+			g2d.setColor(Color.RED.darker());
+			Rectangle2D bounds = textLayout.getBounds();
+
+			float ascent = textLayout.getAscent();
+			Line2D.Double ascenderLine = new Line2D.Double(bounds.getX(), bounds.getY() + ascent, bounds.getX() + bounds.getWidth(), bounds.getY() + ascent);
+			Line2D.Double baseLine = new Line2D.Double(bounds.getX(), ascent, bounds.getX() + bounds.getWidth(), ascent);
+			float descent = textLayout.getDescent() + ascent;
+			Line2D.Double descenderLine = new Line2D.Double(bounds.getX(), descent, bounds.getX() + bounds.getWidth(), descent);
+			
+			g2d.draw(ascenderLine);			
+			g2d.draw(baseLine);			
+			g2d.draw(descenderLine);		
+		}
+		
+	}
+	
+	/**
+	 * <p>
+	 * Draw a text sample twice one with kerning on and one without kerning.
+	 * </p>
+	 * <img src="doc-files/FontKerningPanel.png">
+	 *
+	 */
+	public static class FontKerningPanel extends JPanel
+	{		
+		public FontKerningPanel(Font font) {
+			super();
+			setOpaque(false);
+			setBackground(null);
+			String text = "AV To ";
+			font = font.deriveFont(32f);
+			setLayout(new MigLayout(new LC().flowY()));
+			add(new BestRenderQualityLabel(text, font, false));
+			add(new BestRenderQualityLabel(text, font));
+		}		
+	}
 
 	public static class BestRenderQualityLabel extends JLabel
 	{
 		private static HashMap<Font, FontMetrics> FONT_METRICS = new HashMap<Font, FontMetrics>();
 
-		public BestRenderQualityLabel(String string, Font font) 
+		public BestRenderQualityLabel(String string, Font font)
+		{
+			this(string, font, true);
+		}
+		
+		@SuppressWarnings("unchecked")
+		public BestRenderQualityLabel(String string, Font font, boolean kerning) 
 		{
 			super(string);
+			Map attributes = font.getAttributes();
+			if (kerning)
+			{
+				attributes.put(TextAttribute.KERNING, TextAttribute.KERNING_ON);
+				font = new Font(attributes);
+			}
 			setFont(font);
 		}
 	
@@ -251,6 +324,9 @@ public class FontChartPanel extends JPanel
 				if (fontName != null)
 					add(new DividerPanel(), "span 2, growx");
 				add(fontPanel, "span 2");
+				add(new FontMetricPanel(fontPanel.font), "span 2");				
+				add(new FontKerningPanel(fontPanel.font), "span 2");
+							
 				fontName = fontPanel.getFontName();
 			} 
 			if (!fontPanel.isOnePointSize())
