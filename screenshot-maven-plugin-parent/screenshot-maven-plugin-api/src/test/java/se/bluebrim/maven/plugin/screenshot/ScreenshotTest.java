@@ -178,6 +178,19 @@ public class ScreenshotTest {
 	}
 	
 	@Screenshot
+	public JComponent testFontKerningPanel()
+	{
+		return new FontChartPanel.FontKerningPanel(new Font(Font.SERIF, Font.PLAIN, 1));
+	}
+	
+	@Screenshot
+	public JComponent testFontMetricPanel()
+	{
+		return new FontChartPanel.FontMetricPanel(new Font(Font.SERIF, Font.PLAIN, 1));
+	}
+	
+	
+	@Screenshot
 	public JPanel testPaintSamplePanel()
 	{
 		return new PaintSamplePanel(Color.ORANGE);
