@@ -2,3 +2,5 @@
 
 - Show how to use a real CMS such as MindTouch
 
+- Add img tag to Javadoc using something like http://qdox.codehaus.org/
+
