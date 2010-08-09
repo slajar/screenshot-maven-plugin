@@ -20,11 +20,11 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.mutable.MutableBoolean;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.velocity.texen.util.FileUtil;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
+import com.thoughtworks.qdox.parser.ParseException;
 
 
 /**
@@ -38,11 +38,15 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 {
 	private static final String DOC_FILES = "doc-files";
 	private File sourceDirectory;
+    private boolean updateSrcFiles;
+    private String srcFileEncoding;
 
-	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory) 
+	public JavaDocScreenshotScanner(AbstractMojo mojo, File testClassesDirectory, File classesDirectory, List<String> testClasspathElements, File sourceDirectory, boolean updateSrcFiles, String srcFileEncoding) 
 	{
 		super(mojo, testClassesDirectory, classesDirectory, testClasspathElements);
 		this.sourceDirectory = sourceDirectory;
+		this.updateSrcFiles = updateSrcFiles;
+		this.srcFileEncoding = srcFileEncoding;
 	}
 
 
@@ -59,7 +63,7 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 			Class javadocClass = getTargetClass(method, screenshotComponent);
 			String screenshotName = createScreenshotName(javadocClass, method);
 			createJavadocScreenshot(screenshotName, screenshotComponent, javadocClass);
-			addImageTagToJavadoc(javadocClass, screenshotName);
+			addMissingImageTagToJavadoc(javadocClass, screenshotName);
 		} else
 			if (screenshot instanceof Collection<?>)
 			{
@@ -81,36 +85,111 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 	}
 
 	/**
+	 * Check for missing image tag in the Java doc.
 	 * Add missing image tag in class comment: The image tag look like this:
 	 * <pre>
 	 * &lt;img src="doc-files/ColorConstants.png"&gt;
 	 * </pre>
-	 * 
+	 * <p>
+	 * Nice to have but not needed, so just skip it with a info line in the log, if anything fails.
+	 * </p>
 	 */
-	private void addImageTagToJavadoc(Class javadocClass, String screenshotName)
+	private void addMissingImageTagToJavadoc(Class javadocClass, String screenshotName)
 	{
 		final String srcPath = DOC_FILES + "/" + screenshotName + "." + FORMAT_PNG;
+		// TODO: Find a solution that works for inner classes as well.
 		File javaFile = new File(sourceDirectory, org.springframework.util.ClassUtils.convertClassNameToResourcePath(javadocClass.getName()) + ".java");
-		boolean notAddedYet = true;
-		if (!hasImageTag(getClassComment(javaFile), srcPath))
+		String classComment = null;
+		try {
+			classComment = getClassComment(javaFile);
+		} catch (ParseException e) {
+			getLog().info("Unable to parse source file due to: " + e.getMessage());
+			return;
+		} catch (FileNotFoundException e)
 		{
-			try {
-				List lines = FileUtils.readLines(javaFile, "UTF-8");
-				List<String> out = new ArrayList<String>();
-				for (Object object : lines) {
-					String line = (String)object;
-					out.add(line);
-					if (line.contains("/**") && notAddedYet)
-					{
-						out.add(" * <img src=\"" + srcPath + "\">");
-						notAddedYet = false;
-					}
-				FileUtils.writeLines(javaFile, "UTF-8", out);		
+			getLog().info("Unable to parse source file due to: " + e.getMessage());
+			return;
+		} catch (IOException e)
+		{
+			getLog().info("Unable to parse source file due to: " + e.getMessage());
+			return;			
+		}
+		String screenShotImageTag = "<img src=\"" + srcPath + "\">";
+		if (StringUtils.isEmpty(classComment))
+		{
+			getLog().info("Missing \"" + screenShotImageTag + "\" in class: " + javadocClass.getName());
+			if (updateSrcFiles)
+				addClassCommentWithImageTag(screenShotImageTag, javaFile);
+		}
+		
+		if (!hasImageTag(classComment, srcPath))
+		{
+			getLog().info("Missing \"" + screenShotImageTag + "\" in class: " + javadocClass.getName());
+			if (updateSrcFiles)
+				addImageTagToClassComment(screenShotImageTag, javaFile);
+		}
+
+	}
+	
+	/**
+	 * Assume that the class comment should be added before the first line containing "public" and "class". 
+	 * A somewhat naive approach but the feature is therefore turned off by default i the plugin config.
+	 */
+	
+	private void addClassCommentWithImageTag(String screenShotImageTag, File javaFile) 
+	{
+		List<String> classComment = new ArrayList<String>();
+		classComment.add("/**");
+		classComment.add(" * " + screenShotImageTag);
+		classComment.add(" */");
+		
+		try {
+			boolean notAddedYet = true;
+			List lines = FileUtils.readLines(javaFile, srcFileEncoding);
+			List<String> out = new ArrayList<String>();
+			for (Object object : lines) {
+				String line = (String)object;
+				out.add(line);
+				if (line.contains("public") && line.contains("class") && notAddedYet)
+				{
+					int index = out.indexOf(line) - 1;
+					while (index >= 0 && out.get(index).contains("@"))
+						index--;
+					out.addAll(index, classComment);
+					notAddedYet = false;
 				}
-			} catch (IOException e) {
-				throw new RuntimeException(e);
+
+			FileUtils.writeLines(javaFile, srcFileEncoding, out);		
 			}
-		}		
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+
+	/**
+	 * Assume that the class comment is the first "/**" in the file. A somewhat naive
+	 * approach but the feature is therefore turned off by default i the plugin config.
+	 */
+	private void addImageTagToClassComment(String screenShotImageTag, File javaFile) 
+	{
+		try {
+			boolean notAddedYet = true;
+			List lines = FileUtils.readLines(javaFile, srcFileEncoding);
+			List<String> out = new ArrayList<String>();
+			for (Object object : lines) {
+				String line = (String)object;
+				out.add(line);
+				if (line.contains("/**") && notAddedYet)
+				{
+					out.add(" * " + screenShotImageTag);
+					notAddedYet = false;
+				}
+			FileUtils.writeLines(javaFile, srcFileEncoding, out);		
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 	private boolean hasImageTag(String comment, final String srcPath)
@@ -142,16 +221,10 @@ public class JavaDocScreenshotScanner extends ScreenshotScanner
 		return result.booleanValue();
 	}
 
-
-	private String getClassComment(File javaFile) {
+	private String getClassComment(File javaFile) throws ParseException, FileNotFoundException, IOException
+	{
 		JavaDocBuilder builder = new JavaDocBuilder();
-	    try {
-			builder.addSource(javaFile);
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}	    
+		builder.addSource(javaFile);
 	    JavaSource src = builder.getSources()[0];
 	    JavaClass javaClass = src.getClasses()[0];
 	    String comment = "<html>" + javaClass.getComment() + "</html>";
