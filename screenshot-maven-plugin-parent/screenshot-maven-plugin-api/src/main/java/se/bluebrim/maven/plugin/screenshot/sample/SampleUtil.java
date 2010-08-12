@@ -1,6 +1,8 @@
 package se.bluebrim.maven.plugin.screenshot.sample;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Paint;
@@ -220,6 +222,23 @@ public class SampleUtil {
 	public static Collection<ScreenshotDescriptor> createStaticImageMethodScreenshots(final Class<?> ofClass) 
 	{
 		return createStaticMethodScreenshots(ofClass, Image.class);
+	}
+
+	/**
+	 * Use this method to perform layout on components without open them in a window. Can be useful for
+	 * unit testing. <br>
+	 * Found at: <a href="http://forums.sun.com/thread.jspa?messageID=10852895#10852895"> Turning a component into a BufferedImage</a>
+	 */
+	public static void propagateDoLayout(Component c) {
+	    synchronized (c.getTreeLock()) {
+	        c.doLayout();
+	
+	        if (c instanceof Container) {
+	            for (Component subComp : ((Container) c).getComponents()) {
+	                propagateDoLayout(subComp);
+	            }
+	        }
+	    }
 	}
 
 
