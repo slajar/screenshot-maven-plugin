@@ -1,7 +1,5 @@
 package se.bluebrim.maven.plugin.screenshot;
 
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
@@ -39,6 +37,7 @@ import org.springframework.core.type.filter.AnnotationTypeFilter;
 
 import se.bluebrim.maven.plugin.screenshot.decorate.DecoratorUtils;
 import se.bluebrim.maven.plugin.screenshot.decorate.ScreenshotDecorator;
+import se.bluebrim.maven.plugin.screenshot.sample.SampleUtil;
 
 import com.keypoint.PngEncoder;
 
@@ -377,7 +376,7 @@ public abstract class ScreenshotScanner {
 	{
 		component.setLocation(0, 0);
 		component.setSize(component.getPreferredSize());
-		propagateDoLayout(component);
+		SampleUtil.propagateDoLayout(component);
 		Rectangle2D rect = calculateDecoratorBounds(component);
 		Rectangle2D dest = new Rectangle2D.Float();
 		Rectangle2D.union(rect, component.getBounds(), dest);
@@ -471,22 +470,6 @@ public abstract class ScreenshotScanner {
 		});
 		return area.getBounds2D();
 	}
-	
-	/**
-	 * Found at: <a href="http://forums.sun.com/thread.jspa?messageID=10852895#10852895"> Turning a component into a BufferedImage</a>
-	 */
-	private static void propagateDoLayout(Component c) {
-	    synchronized (c.getTreeLock()) {
-	        c.doLayout();
-	 
-	        if (c instanceof Container) {
-	            for (Component subComp : ((Container) c).getComponents()) {
-	                propagateDoLayout(subComp);
-	            }
-	        }
-	    }
-	}
-
 	
 	/**
 	 * At:
