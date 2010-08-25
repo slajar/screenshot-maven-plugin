@@ -336,16 +336,20 @@ public abstract class ScreenshotScanner {
 			return screenshotMethod.invoke(instance);
 		} catch (InstantiationException e)
 		{
-			throw new RuntimeException(e);
+			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
+			return null;
 		} catch (IllegalAccessException e)
 		{
-			throw new RuntimeException(e);
+			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
+			return null;
 		} catch (SecurityException e)
 		{
-			throw new RuntimeException(e);
+			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
+			return null;
 		} catch (IllegalArgumentException e)
 		{
-			throw new RuntimeException(e);
+			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
+			return null;
 		} catch (InvocationTargetException e)
 		{
 			handleExceptionInCalledMethod(targetClass, screenshotMethod, e);
