@@ -155,6 +155,6 @@
 		<module>tiny-cms</module>
 		<module>swingset3-demo-app</module>
 		<module>screenshot-examples</module>
-		<module>worldclock</module>
+		<module>worldclock-example</module>
 	</modules>
 </project>
