@@ -48,6 +48,13 @@
 			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
 		</pluginRepository>
 	</pluginRepositories>
+	<repositories>
+		<repository>
+			<id>google-code</id>
+			<name>Screenshot Maven API Repo</name>
+			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.swinglabs</groupId>
