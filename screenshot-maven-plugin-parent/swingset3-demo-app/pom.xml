@@ -90,5 +90,10 @@
 			<name>FreeHEP Maven Repository</name>
 			<url>http://java.freehep.org/maven2</url>
 		</repository>
+		<repository>
+			<id>google-code</id>
+			<name>Screenshot Maven API Repo</name>
+			<url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+		</repository>
 	</repositories>
 </project>
