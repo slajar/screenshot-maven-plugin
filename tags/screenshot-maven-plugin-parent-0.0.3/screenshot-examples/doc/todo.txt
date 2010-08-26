@@ -1,0 +1,9 @@
+- Add samples from http://www.jug-muenster.de/swing-worldclock-427
+
+- Show how to use a real CMS such as MindTouch
+
+- Add img tag to Javadoc using something like http://qdox.codehaus.org/
+
+- Create plug in documentation according to: http://www.vineetmanohar.com/2009/04/how-to-auto-generate-maven-plugin-documentation/
+
+- Creae a DocBook example according to http://www.vineetmanohar.com/2010/02/maven-docbook-for-beginners/
