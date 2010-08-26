@@ -4,10 +4,11 @@
   <artifactId>tiny-cms</artifactId>
   <version>0.0.2</version>
   <versioning>
-    <release>0.0.2</release>
+    <release>0.0.3</release>
     <versions>
       <version>0.0.2</version>
+      <version>0.0.3</version>
     </versions>
-    <lastUpdated>20100719131509</lastUpdated>
+    <lastUpdated>20100826105913</lastUpdated>
   </versioning>
 </metadata>
