@@ -155,8 +155,8 @@
 		<module>screenshot-maven-plugin</module>
 		<module>upload-maven-plugin</module>
 		<module>tiny-cms</module>
-		<module>swingset3-demo-app</module>
+		<!-- <module>swingset3-demo-app</module>
 		<module>screenshot-examples</module>
-		<module>worldclock-example</module>
+		<module>worldclock-example</module>-->
 	</modules>
 </project>
