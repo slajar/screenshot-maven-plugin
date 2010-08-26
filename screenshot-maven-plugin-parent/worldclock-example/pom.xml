@@ -5,9 +5,7 @@
     <groupId>se.bluebrim.maven.plugin</groupId>
     <version>0.0.3-SNAPSHOT</version>
   </parent>
-  <groupId>se.bluebrim.maven.plugin</groupId>
   <artifactId>worldclock-example</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
   <name>World Clock</name>
   <description>A Swing example project showing how to use the screenshot-maven-plugin</description>
   <dependencies>

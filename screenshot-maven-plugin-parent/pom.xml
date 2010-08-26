@@ -16,6 +16,8 @@
 	</scm>
 	<properties>
 		<jettyPort>8080</jettyPort>
+		<!-- http://maven.apache.org/general.html#encoding-warning -->
+	    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>	
 	<build>
 		<resources>
