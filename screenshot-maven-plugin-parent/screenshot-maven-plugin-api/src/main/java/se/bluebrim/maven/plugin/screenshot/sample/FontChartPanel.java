@@ -80,9 +80,9 @@ public class FontChartPanel extends JPanel
 		 * This kind of font is always derived to an appropriate size
 		 * and is to small to display as a sample
 		 */
-		public boolean isOnePointSize() 
+		public static Font magnifyOnePointSize(Font font) 
 		{
-			return font.getSize() == 1;
+			return font.getSize() == 1 ? font.deriveFont(12f) : font;
 		}
 	
 		private void addInfoLine(String info)
@@ -109,7 +109,7 @@ public class FontChartPanel extends JPanel
 		
 		public static JLabel createPangramSample(Font font)
 		{
-			return new BestRenderQualityLabel(BUNDLE.getString("font.pangram"), font);
+			return new BestRenderQualityLabel(BUNDLE.getString("font.pangram"), FontPanel.magnifyOnePointSize(font));
 		}
 		
 		@Override
@@ -340,12 +340,11 @@ public class FontChartPanel extends JPanel
 				add(new FontKerningPanel(fontPanel.font), "span 2");
 							
 				fontName = fontPanel.getFontName();
-			} 
-			if (!fontPanel.isOnePointSize())
-			{
-				add(new FontSizeLabel(fontPanel.font));
-				add(FontPanel.createPangramSample(fontPanel.font));
 			}
+			Font font = FontPanel.magnifyOnePointSize(fontPanel.font);
+			add(new FontSizeLabel(font));
+			add(FontPanel.createPangramSample(font));
+
 		}			
 	}
 }
