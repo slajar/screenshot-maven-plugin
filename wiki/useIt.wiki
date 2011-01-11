@@ -156,6 +156,8 @@ public class HelloWorldPanelTest {
 }
 }}}
 
+If you are using Eclipse adding these classes are very simple. Just copy the source from this page and paste it into the src/main or src/test folder in the Package Explorer view. Eclipse will create the package and the class for you.
+
 From the command line run: `mvn screenshot:javadoc`
 
 A `doc` folder containing a `HelloWorldPanel.png` is created at the same location as the source code for `HelloWorldPanel` class
