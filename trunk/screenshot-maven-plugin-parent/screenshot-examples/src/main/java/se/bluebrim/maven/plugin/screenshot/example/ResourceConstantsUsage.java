@@ -1,6 +1,7 @@
 package se.bluebrim.maven.plugin.screenshot.example;
 
 import java.awt.Color;
+import java.awt.Font;
 
 import javax.swing.Icon;
 
@@ -13,7 +14,7 @@ import javax.swing.Icon;
  * <ul>
  * <li>Hover your mouse pointer over a {@code ColorConstants} class reference and see how the Javadoc pop ups</li>
  * <li>Try to assign {@code yourColor} with a color from {@code ColorConstants}</li>
- * <li>Do the same things with {@code IconConstants}
+ * <li>Do the same things with {@code IconConstants} and {@link FontFactory}
  * </ul>
  * 
  * @author Goran Stack
@@ -25,5 +26,7 @@ public class ResourceConstantsUsage {
 	private Color yourColor;
 	private Icon myIcon = IconConstants.DIALOG_INFORMATION;
 	private Icon yourIcon;
+	private Font myFont = FontFactory.sansSerif28();
+	private Font yourFont;
 
 }
