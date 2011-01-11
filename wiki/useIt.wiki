@@ -2,7 +2,7 @@
 
 = Introduction =
 
-We assume that you have a multi module project. Otherwise you put all configuration in your single pom file.
+We assume that you have a multi module project. Otherwise you put all configuration in your single pom file. This is a minimal configuration that let you run the javadoc goal only. The other goals need some more configuration. 
 
 
 == Configuration in the parent pom ==
@@ -15,16 +15,26 @@ Specify a property for the version number:
 </properties>
 }}}
 
-Since the screenshot-maven-plugin artifacts do not appear in Maven Central Repository you have to add a repository element:
+Since the screenshot-maven-plugin artifacts do not appear in Maven Central Repository you have to add a repository and a pluginRepository element:
 
 {{{
 <repositories>
     <repository>
         <id>googlecode-screenshot-maven-plugin</id>
-        <name>screenshot-maven-plugin Maven Repository</name>
+        <name>Screenshot Maven Plugin Repository</name>
         <url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
      </repository>
 </repositories>
+}}}
+
+{{{
+<pluginRepositories>
+    <pluginRepository>
+        <id>googlecode-screenshot-maven-plugin</id>
+        <name>Screenshot Maven Plugin Repository</name>
+        <url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+    </pluginRepository>
+</pluginRepositories>
 }}}
 
 Add a plugin element to the pluginManagement part
@@ -63,3 +73,32 @@ Add a dependency element to the dependencyManagement part
          </dependencies>
 </dependencyManagement>
 }}}
+
+== Configuration in module pom ==
+
+Add the following to the pom files of modules containing Swing classes that you like to generate screen shots of.
+
+{{{
+<dependencies>
+    <dependency>
+        <groupId>se.bluebrim.maven.plugin</groupId>
+        <artifactId>screenshot-maven-plugin-api</artifactId>
+    </dependency>
+          .
+          .
+          .
+</dependencies>
+}}}
+
+Verify the configuration by adding the following classes to one of those modules:
+
+In `src/main` add:
+{{{
+}}}
+
+In `src/test` add:
+{{{
+}}}
+
+
+ 
