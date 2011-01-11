@@ -163,9 +163,9 @@ A `doc` folder containing a `HelloWorldPanel.png` is created at the same locatio
 http://screenshot-maven-plugin.googlecode.com/svn/site/images/HelloWorldPanel.png
 
 The screenshot plugin detect the missing img tag in the Javadoc of `HelloWorldPanel` class and writes to the console.
-{{{
-[INFO] Missing "<img src="doc-files/HelloWorldPanel.png">" in class:se.bluebrim.maven.plugin.screenshot.example.HelloWorldPanel
-}}}
+
+`[INFO] Missing "<img src="doc-files/HelloWorldPanel.png">" in class:se.bluebrim.maven.plugin.screenshot.example.HelloWorldPanel`
+
  
 To include the screen shot in the Javadoc of the `HelloWorldPanel` class copy the image tag from Maven console and paste into the Javadoc. You should now be able to see the image as part of the Javadoc. 
 
