@@ -1,0 +1,65 @@
+#summary Instructions how to use the plugin in your Maven project.
+
+= Introduction =
+
+We assume that you have a multi module project. Otherwise you put all configuration in your single pom file.
+
+
+== Configuration in the parent pom ==
+
+Specify a property for the version number:
+
+{{{
+<properties>
+    <screenshot-maven-plugin-version>0.0.4</screenshot-maven-plugin-version>
+</properties>
+}}}
+
+Since the screenshot-maven-plugin artifacts do not appear in Maven Central Repository you have to add a repository element:
+
+{{{
+<repositories>
+    <repository>
+        <id>googlecode-screenshot-maven-plugin</id>
+        <name>screenshot-maven-plugin Maven Repository</name>
+        <url>http://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+     </repository>
+</repositories>
+}}}
+
+Add a plugin element to the pluginManagement part
+
+{{{
+<pluginManagement>
+    <plugins>
+        <plugin>
+            <groupId>se.bluebrim.maven.plugin</groupId>
+            <artifactId>screenshot-maven-plugin</artifactId>
+            <version>${screenshot-maven-plugin-version}</version>
+            <configuration>
+                <goalPrefix>screenshot</goalPrefix>
+            </configuration>
+         </plugin>
+         .
+         .
+         .
+     </plugins>
+</pluginManagement>
+}}}
+
+Add a dependency element to the dependencyManagement part
+{{{
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>se.bluebrim.maven.plugin</groupId>
+            <artifactId>screenshot-maven-plugin-api</artifactId>
+            <version>${screenshot-maven-plugin-version}</version>
+            <scope>test</scope>
+         </dependency>
+         .
+         .
+         .
+         </dependencies>
+</dependencyManagement>
+}}}
