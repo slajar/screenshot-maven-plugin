@@ -92,7 +92,7 @@ Add the following to the pom files of modules containing Swing classes that you 
 
 Verify the configuration by adding the following classes to one of those modules:
 
-In `src/main` add:
+In `src/main/java` add:
 {{{
 package se.bluebrim.maven.plugin.screenshot.example;
 
@@ -133,7 +133,7 @@ public class HelloWorldPanel extends JPanel {
 }
 }}}
 
-In `src/test` add:
+In `src/test/java` add:
 {{{
 package se.bluebrim.maven.plugin.screenshot.example;
 
