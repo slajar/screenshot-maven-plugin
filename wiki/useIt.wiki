@@ -1,4 +1,5 @@
 #summary Instructions how to use the plugin in your Maven project.
+#labels Featured
 
 = Introduction =
 
