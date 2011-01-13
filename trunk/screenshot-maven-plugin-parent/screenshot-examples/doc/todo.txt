@@ -6,4 +6,6 @@
 
 - Create plug in documentation according to: http://www.vineetmanohar.com/2009/04/how-to-auto-generate-maven-plugin-documentation/
 
-- Creae a DocBook example according to http://www.vineetmanohar.com/2010/02/maven-docbook-for-beginners/
+- Create a DocBook example according to http://www.vineetmanohar.com/2010/02/maven-docbook-for-beginners/
+
+- Let the documentation in the site get inspiration from http://code.google.com/p/c5-db-migration/wiki/MavenPlugin
