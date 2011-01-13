@@ -1,5 +1,5 @@
 #summary Learn how to check out the source code using Eclipse.
-#labels Featured,Eclipse,Develop
+#labels Featured,Phase-Implementation
 
 ==Step by step how to getting started==
 
@@ -10,4 +10,8 @@
   # Press the "Add SVN Repository" button and add the following URL in the dialog: http://screenshot-maven-plugin.googlecode.com/svn/trunk
   # Select the screenshot-maven-plugin-parent folder and use the right button menu to perform: Checkout as Maven Project...
 
-Your Eclipse workspace should now be populated with the modules of the screenshot-maven-plugin project. The dependency jars should be automatically downloaded by Maven. 
+Your Eclipse workspace should now be populated with the modules of the screenshot-maven-plugin project. The dependency jars should be automatically downloaded by Maven.
+
+See screen shots in action by open the class `ResourceConstantsUsage` and hover the mouse over the `ColorConstants` class.
+
+http://screenshot-maven-plugin.googlecode.com/svn/site/images/colorconstants-hover.jpg
