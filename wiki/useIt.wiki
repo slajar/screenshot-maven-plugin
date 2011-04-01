@@ -161,7 +161,7 @@ If you are using Eclipse adding these classes are very simple. Just copy the sou
 
 From the command line run: `mvn screenshot:javadoc`
 
-A `doc` folder containing a `HelloWorldPanel.png` is created at the same location as the source code for `HelloWorldPanel` class
+A `doc-files` folder containing a `HelloWorldPanel.png` is created at the same location as the source code for `HelloWorldPanel` class
 
 http://screenshot-maven-plugin.googlecode.com/svn/site/images/HelloWorldPanel.png
 
