@@ -18,6 +18,10 @@
 		<jettyPort>8080</jettyPort>
 		<!-- http://maven.apache.org/general.html#encoding-warning -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<repo.release.id>svn-maven-repo-relases</repo.release.id>
+		<repo.release.url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</repo.release.url>
+		<repo.snapshot.id>svn-maven-repo-snapshots</repo.snapshot.id>
+		<repo.snapshot.url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo-snapshot</repo.snapshot.url>
 	</properties>
 	<build>
 		<resources>
@@ -112,16 +116,25 @@
 	<distributionManagement>
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
-			<id>googlecode</id>
-			<url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo</url>
+			<id>${repo.release.id}</id>
+			<url>${repo.release.url}</url>
 		</repository>
 		<snapshotRepository>
 			<uniqueVersion>false</uniqueVersion>
-			<id>googlecode-screenshot-maven-plugin</id>
-			<url>svn:https://screenshot-maven-plugin.googlecode.com/svn/mavenrepo-snapshot</url>
+			<id>${repo.snapshot.id}</id>
+			<url>${repo.snapshot.url}</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<profiles>
+		<profile>
+			<id>atg-private-maven-repo</id>
+			<properties>
+				<repo.release.id>atg-releases</repo.release.id>
+				<repo.release.url>http://nexus.hastsportenshus.atg.se/content/repositories/releases</repo.release.url>
+				<repo.snapshot.id>atg-snapshots</repo.snapshot.id>
+				<repo.snapshot.url>http://nexus.hastsportenshus.atg.se/content/repositories/snapshots</repo.snapshot.url>
+			</properties>
+		</profile>
 		<profile>
 			<id>local-jetty</id>
 			<build>
