@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="backgroundPanel1" min="-2" pref="398" max="-2" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="backgroundPanel1" min="-2" pref="391" max="-2" attributes="0"/>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="worldtimeclock.BackgroundPanel" name="backgroundPanel1">
+      <Properties>
+        <Property name="name" type="java.lang.String" value="backgroundPanel1" noResource="true"/>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="clockPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="clockPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="clockPanel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="clockPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="clockPanel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="clockPanel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="clockPanel3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="clockPanel4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="21" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="worldtimeclock.ClockPanel" name="clockPanel1">
+          <Properties>
+            <Property name="city" type="worldtimeclock.City" editor="org.netbeans.modules.form.editors.EnumEditor">
+              <Value id="HongKong"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="clockPanel1" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="worldtimeclock.ClockPanel" name="clockPanel2">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="clockPanel2" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="worldtimeclock.ClockPanel" name="clockPanel3">
+          <Properties>
+            <Property name="city" type="worldtimeclock.City" editor="org.netbeans.modules.form.editors.EnumEditor">
+              <Value id="NewYork"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="clockPanel3" noResource="true"/>
+          </Properties>
+        </Component>
+        <Component class="worldtimeclock.ClockPanel" name="clockPanel4">
+          <Properties>
+            <Property name="city" type="worldtimeclock.City" editor="org.netbeans.modules.form.editors.EnumEditor">
+              <Value id="SanFrancisco"/>
+            </Property>
+            <Property name="name" type="java.lang.String" value="clockPanel4" noResource="true"/>
+          </Properties>
+        </Component>
+      </SubComponents>
+    </Container>
+  </SubComponents>
+</Form>
