@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<metadata xsi:schemaLocation="http://maven.apache.org/METADATA/1.0.0 http://maven.apache.org/xsd/metadata-1.0.0.xsd" xmlns="http://maven.apache.org/METADATA/1.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<metadata>
   <groupId>se.bluebrim.maven.plugin</groupId>
   <artifactId>upload-maven-plugin</artifactId>
-  <version>0.0.2</version>
   <versioning>
-    <latest>0.0.5</latest>
-    <release>0.0.3</release>
+    <latest>0.0.6</latest>
+    <release>0.0.6</release>
     <versions>
       <version>0.0.2</version>
       <version>0.0.3</version>
       <version>0.0.4</version>
       <version>0.0.5</version>
+      <version>0.0.6</version>
     </versions>
-    <lastUpdated>20110411122844</lastUpdated>
+    <lastUpdated>20120827144054</lastUpdated>
   </versioning>
 </metadata>
