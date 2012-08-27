@@ -15,6 +15,12 @@
         <value>0.0.6-20120827.124652-1</value>
         <updated>20120827124652</updated>
       </snapshotVersion>
+      <snapshotVersion>
+        <classifier>tests</classifier>
+        <extension>jar</extension>
+        <value>0.0.6-20120827.124652-1</value>
+        <updated>20120827124652</updated>
+      </snapshotVersion>
     </snapshotVersions>
   </versioning>
 </metadata>
