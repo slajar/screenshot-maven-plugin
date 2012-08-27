@@ -2,12 +2,12 @@
 <metadata>
   <groupId>se.bluebrim.maven.plugin</groupId>
   <artifactId>screenshot-maven-plugin-api</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
   <versioning>
     <versions>
       <version>0.0.3-SNAPSHOT</version>
       <version>0.0.5-SNAPSHOT</version>
+      <version>0.0.6-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20101029122219</lastUpdated>
+    <lastUpdated>20120827124853</lastUpdated>
   </versioning>
 </metadata>
